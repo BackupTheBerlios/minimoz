@@ -6277,8 +6277,8 @@ static int topicdata(char *s,int len,void *_u)
 	}
 	if(u->clen+len>=sizeof(u->cdata))
 	{
-		printf("data oversize: have %d, need %d\n",sizeof(u->cdata),
-			u->clen+len);
+		printf("data oversize: have %d, need %d\n",
+			(int)sizeof(u->cdata),u->clen+len);
 		return -1;
 	}
 	memcpy(u->cdata+u->clen,s,len);
@@ -7186,8 +7186,8 @@ static int termdata(char *s,int len,void *_u)
 	}
 	if(u->clen+len>=sizeof(u->cdata))
 	{
-		printf("data oversize: have %d, need %d\n",sizeof(u->cdata),
-			u->clen+len);
+		printf("data oversize: have %d, need %d\n",
+			(int)sizeof(u->cdata),u->clen+len);
 		return -1;
 	}
 	memcpy(u->cdata+u->clen,s,len);
@@ -8439,8 +8439,8 @@ static int contentdata(char *s,int len,void *_u)
 	}
 	if(u->clen+len>=sizeof(u->cdata))
 	{
-		printf("data oversize: have %d, need %d\n",sizeof(u->cdata),
-			u->clen+len);
+		printf("data oversize: have %d, need %d\n",
+			(int)sizeof(u->cdata),u->clen+len);
 		return -1;
 	}
 	memcpy(u->cdata+u->clen,s,len);
@@ -9066,8 +9066,8 @@ static int redirectdata(char *s,int len,void *_u)
 	}
 	if(u->clen+len>=sizeof(u->cdata))
 	{
-		printf("data oversize: have %d, need %d\n",sizeof(u->cdata),
-			u->clen+len);
+		printf("data oversize: have %d, need %d\n",
+			(int)sizeof(u->cdata),u->clen+len);
 		return -1;
 	}
 	memcpy(u->cdata+u->clen,s,len);
