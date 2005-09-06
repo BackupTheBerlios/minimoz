@@ -7889,7 +7889,7 @@ int main(int argc,char *argv[])
 	if(usepool)
 	{
 		pthread_mutex_lock(&poolmtx);
-#ifdef Linux
+#ifdef LINUXTHREADS
 		pthread_kill_other_threads_np();
 #endif
 		for(i=0;i<maxconn;i++)if(pool[i].connflag)

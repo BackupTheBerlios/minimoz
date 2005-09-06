@@ -23,8 +23,6 @@ NULLDBLIB=
 
 include $(DEFS)
 
-CFLAGS+=-D`uname`
-
 ifneq ($(NULLDB),)
 DBLIST+=1
 CFLAGS+=-DUSE_NULL
@@ -43,9 +41,9 @@ SQLITELIB=-lsqlite3
 else
 SQLITEINC=-I$(SQLITE)/include
 ifneq ($(RPATHFLAG),)
-SQLITELIB=-L$(SQLITE)/lib $(RPATHFLAG)$(SQLITE)/lib -lsqlite3
+SQLITELIB=-L$(SQLITE)/lib64 -L$(SQLITE)/lib $(RPATHFLAG)$(SQLITE)/lib64 $(RPATHFLAG)$(SQLITE)/lib -lsqlite3
 else
-SQLITELIB=-L$(SQLITE)/lib -lsqlite3
+SQLITELIB=-L$(SQLITE)/lib64 -L$(SQLITE)/lib -lsqlite3
 endif
 endif
 endif
@@ -57,9 +55,9 @@ CFLAGS+=-DUSE_MYSQL
 SQLPFX=mysql_
 MYSQLINC=-I$(MYSQL)/include/mysql
 ifneq ($(RPATHFLAG),)
-MYSQLLIB=-L$(MYSQL)/lib/mysql $(RPATHFLAG)$(MYSQL)/lib/mysql -lmysqlclient_r
+MYSQLLIB=-L$(MYSQL)/lib64/mysql -L$(MYSQL)/lib/mysql $(RPATHFLAG)$(MYSQL)/lib64/mysql $(RPATHFLAG)$(MYSQL)/lib/mysql -lmysqlclient_r
 else
-MYSQLLIB=-L$(MYSQL)/lib/mysql -lmysqlclient_r
+MYSQLLIB=-L$(MYSQL)/lib64/mysql -L$(MYSQL)/lib/mysql -lmysqlclient_r
 endif
 endif
 
@@ -69,7 +67,7 @@ DBLIST+=1
 CFLAGS+=-DUSE_MYSQL -DENGINE
 SQLPFX=mysql_
 MYSQLINC=-I$(MYSQLENG)/include/mysql
-MYSQLLIB=-L$(MYSQLENG)/lib/mysql -lmysqld $(ENGINELIBS)
+MYSQLLIB=-L$(MYSQLENG)/lib64/mysql -L$(MYSQLENG)/lib/mysql -lmysqld $(ENGINELIBS)
 endif
 
 ifneq ($(PGSQL),)
@@ -83,9 +81,9 @@ PGSQLLIB=-lpq
 else
 PGSQLINC=-I$(PGSQL)/include/server -I$(PGSQL)/include
 ifneq ($(RPATHFLAG),)
-PGSQLLIB=-L$(PGSQL)/lib $(RPATHFLAG)$(PGSQL)/lib -lpq
+PGSQLLIB=-L$(PGSQL)/lib64 -L$(PGSQL)/lib $(RPATHFLAG)$(PGSQL)/lib64 $(RPATHFLAG)$(PGSQL)/lib -lpq
 else
-PGSQLLIB=-L$(PGSQL)/lib -lpq
+PGSQLLIB=-L$(PGSQL)/lib64 -L$(PGSQL)/lib -lpq
 endif
 endif
 endif
@@ -96,9 +94,9 @@ ZLIBLIB=-lz
 else
 ZLIBINC=-I$(ZLIB)/include
 ifneq ($(RPATHFLAG),)
-ZLIBLIB=-L$(ZLIB)/lib $(RPATHFLAG)$(ZLIB)/lib -lz
+ZLIBLIB=-L$(ZLIB)/lib64 -L$(ZLIB)/lib $(RPATHFLAG)$(ZLIB)/lib64 $(RPATHFLAG)$(ZLIB)/lib -lz
 else
-ZLIBLIB=-L$(ZLIB)/lib -lz
+ZLIBLIB=-L$(ZLIB)/lib64 -L$(ZLIB)/lib -lz
 endif
 endif
 
@@ -108,8 +106,8 @@ ifeq ($(CURL),/usr)
 CURLINC=
 CURLLIB=-lcurl
 else
-CURLINC=-I$(DMALLOC)/include
-CURLLIB=-L$(DMALLOC)/lib -lcurl
+CURLINC=-I$(CURL)/include
+CURLLIB=-L$(CURL)/lib64 -L$(DMALLOC)/lib -lcurl
 endif
 endif
 
@@ -120,7 +118,7 @@ DMALLOCINC=
 DMALLOCLIB=-ldmallocth
 else
 DMALLOCINC=-I$(DMALLOC)/include
-DMALLOCLIB=-L$(DMALLOC)/lib -ldmallocth
+DMALLOCLIB=-L$(DMALLOC)/lib64 -L$(DMALLOC)/lib -ldmallocth
 endif
 endif
 

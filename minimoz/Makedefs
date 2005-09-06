@@ -36,11 +36,15 @@ ZLIB=/usr
 #
 # definitions for curl 7.10 or later (optional, required for loadmoz)
 #
-CURL=/usr
+#CURL=/usr
 #
 # build with dmalloc memory allocation debugging (development only)
 #
 #DMALLOC=/usr/local/dmalloc
+#
+# define if you have LinuxThreads instead of NPTL
+#
+#LINUXTHREADS=1
 #
 #------------------------------------------------------------------------------
 #                            Compiler and Linker
@@ -49,7 +53,7 @@ CURL=/usr
 # compiler and compile flags
 #
 CC=gcc
-CFLAGS=-Wall -O3 -fomit-frame-pointer -minline-all-stringops
+CFLAGS=-Wall -O3 -fomit-frame-pointer
 #
 # linker, linker flags and shared library extension
 #
@@ -83,7 +87,7 @@ SHEXT=so
 #                         Database Build Tools
 #------------------------------------------------------------------------------
 #
-# retrieve command for the rfd.dmoz.org files for database build
+# retrieve command for the rdf.dmoz.org files for database build
 #
 RETRIEVECMD=curl -q --connect-timeout 30 -O -R -z $$i
 #RETRIEVECMD=wget -N -nd --timeout=30 --tries=5
