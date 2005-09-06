@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Database Scheme</title>
+  <meta content="Andreas Steinmetz, ast@domdv.de" name="author">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#000099" link="#000099" vlink="#990099">
+<h1>Database Scheme</h1>
+The database scheme used is on purpose kept simple. Thus any SQL92
+compliant database that can handle UTF-8 text fields and 32 bit
+integers should be useable. It is, however, of advantage if the
+database supports some mechanism that can be used for non-trivial user
+defined collations.<br>
+<h2>Table Scheme<br>
+</h2>
+<table border="1">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">table<br>
+      </th>
+      <th style="vertical-align: top;">fields<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">aliases</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY
+KEY,target INTEGER,id TEXT,title
+TEXT</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#2">aolsearch</a><sup>2</sup><br>
+      </td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,value <a
+ href="#6">TEXT</a><sup>6</sup><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#2">charset</a><sup>2</sup><br>
+      </td>
+      <td style="vertical-align: top;">id INTEGER PRIMARY KEY,name <a
+ href="#6">TEXT</a><sup>6</sup><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#3">chedne</a><sup>3</sup></td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,catid
+INTEGER,type <a href="#4">INTEGER</a><sup>4</sup>,id
+INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">counters</td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,topics
+INTEGER,pages INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">description</td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,value
+TEXT</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#2">dispname</a><sup>2</sup><br>
+      </td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,value <a
+ href="#6">TEXT</a><sup>6</sup><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">editor</td>
+      <td style="vertical-align: top;">id INTEGER PRIMARY KEY,name <a
+ href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">externalpages</td>
+      <td style="vertical-align: top;">id INTEGER PRIMARY KEY,catid
+INTEGER,linktype <a href="#5">INTEGER</a><sup>5</sup>,<a href="#1">linklevel</a>
+      <a href="#5">INTEGER</a><sup>1,5</sup>,priority <a href="#5">INTEGER</a><sup>5</sup>,<a
+ href="#1">type</a> INTEGER<sup>1</sup>,link TEXT,title
+TEXT,description
+TEXT,mediadate <a href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">langlinks</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,src
+INTEGER,dst
+INTEGER,lang <a href="#5">INTEGER</a><sup>5</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">languages</td>
+      <td style="vertical-align: top;">id <a href="#5">INTEGER</a>
+PRIMARY KEY<sup>5</sup>,name <a href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">letterbar</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,src
+INTEGER,dst
+INTEGER,title <a href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">narrow</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,src
+INTEGER,level <a href="#4">INTEGER</a><sup>4</sup>,dst
+INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">newsgroup</td>
+      <td style="vertical-align: top;">id INTEGER PRIMARY KEY,name
+TEXT</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">nlsinfo</td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,nlsid <a
+ href="#5">INTEGER</a><sup>5</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">nlssupport</td>
+      <td style="vertical-align: top;">serial <a href="#5">INTEGER</a>
+PRIMARY KEY<sup>5</sup>,name <a href="#6">TEXT</a><sup>6</sup>,id <a
+ href="#6">TEXT</a><sup>6</sup>,seealso <a href="#6">TEXT</a><sup>6</sup>,otherlang
+      <a href="#6">TEXT</a><sup>6</sup>,description <a href="#6">TEXT</a><sup>6</sup>,editor
+      <a href="#6">TEXT</a><sup>6</sup>,searchonpre <a href="#6">TEXT</a><sup>6</sup>,searchonpost
+      <a href="#6">TEXT</a><sup>6</sup>,searchfor <a href="#6">TEXT</a><sup>6</sup>,searchalldir
+      <a href="#6">TEXT</a><sup>6</sup>,searchforin <a href="#6">TEXT</a><sup>6</sup>,lastupdate
+      <a href="#6">TEXT</a><sup>6</sup>,termsofuse <a href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pagesearch</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY
+KEY,wordid INTEGER,weight
+INTEGER,pageid INTEGER,catid INTEGER,ages&nbsp; <a href="#4">INTEGER</a><sup>4</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pagewords</td>
+      <td style="vertical-align: top;">wordid INTEGER PRIMARY KEY,word <a
+ href="#6">TEXT</a><sup>6</sup>,<a href="#1">occurrence</a> INTEGER<sup>1</sup><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">redirects</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,id
+TEXT,catid INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">related</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,src
+INTEGER,dst INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symlinks</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,src
+INTEGER,level <a href="#4">INTEGER</a><sup>4</sup>,alias INTEGER,dst
+INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#2">terms</a><sup>2</sup><br>
+      </td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,catid
+INTEGER,term <a href="#6">TEXT</a><sup>6</sup><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicref</td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY
+KEY,parentid INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topics</td>
+      <td style="vertical-align: top;">catid INTEGER PRIMARY KEY,id
+TEXT,title TEXT,lastupdate <a href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicsearch</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY
+KEY,wordid INTEGER,catid
+INTEGER,ages <a href="#4">INTEGER</a><sup>4</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topictrace</td>
+      <td style="vertical-align: top;">serial INTEGER PRIMARY KEY,refid
+INTEGER,catid
+INTEGER</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicwords</td>
+      <td style="vertical-align: top;">wordid INTEGER PRIMARY KEY,word <a
+ href="#6">TEXT</a><sup>6</sup></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#2">types</a><sup>2</sup><br>
+      </td>
+      <td style="vertical-align: top;">id INTEGER PRIMARY KEY,value TEXT</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<sup><a name="1"></a>1</sup> This field is only generated if all
+possible tables and fields are generated<br>
+<sup><a name="2"></a>2</sup> This table is only generated if all
+possible tables and fields are generated<br>
+<sup><a name="3"></a>3</sup> charset information is stored only if all
+possible tables and fields are generated<br>
+<sup><a name="4"></a>4</sup> range is limited to 0-255 inclusively<br>
+<sup><a name="5"></a>5</sup> range is limited to 0-65535 inclusively<br>
+<sup><a name="6"></a>6</sup> limited to a maximum of 255 characters<br>
+<br>
+If not stated otherwise INTEGER must hold 32 bit signed values and TEXT
+must hold up to 65535 characters. All text is stored in UTF-8 format.
+All primary keys columns contain unique values.<br>
+<h2>Indexes<br>
+</h2>
+<table border="1">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">index<br>
+      </th>
+      <th style="vertical-align: top;">table<br>
+      </th>
+      <th style="vertical-align: top;">fields<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">chedneidx</td>
+      <td style="vertical-align: top;">chedne</td>
+      <td style="vertical-align: top;">catid,type</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">extpgidx</td>
+      <td style="vertical-align: top;">externalpages</td>
+      <td style="vertical-align: top;">catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">langsrc</td>
+      <td style="vertical-align: top;">langlinks</td>
+      <td style="vertical-align: top;">src,dst</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">lettersrc</td>
+      <td style="vertical-align: top;">letterbar</td>
+      <td style="vertical-align: top;">src,dst</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">narrowsrc</td>
+      <td style="vertical-align: top;">narrow</td>
+      <td style="vertical-align: top;">src,level</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pgscwdidx</td>
+      <td style="vertical-align: top;">pagesearch</td>
+      <td style="vertical-align: top;">wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pgwdwdidx</td>
+      <td style="vertical-align: top;">pagewords</td>
+      <td style="vertical-align: top;">word</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rediridx</td>
+      <td style="vertical-align: top;">redirects</td>
+      <td style="vertical-align: top;">id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">relsrc</td>
+      <td style="vertical-align: top;">related</td>
+      <td style="vertical-align: top;">src,dst</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symsrc</td>
+      <td style="vertical-align: top;">symlinks</td>
+      <td style="vertical-align: top;">src,level</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicids</td>
+      <td style="vertical-align: top;">topics</td>
+      <td style="vertical-align: top;">id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tpref</td>
+      <td style="vertical-align: top;">topicref</td>
+      <td style="vertical-align: top;">parentid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tpscwdidx</td>
+      <td style="vertical-align: top;">topicsearch</td>
+      <td style="vertical-align: top;">wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tptrc</td>
+      <td style="vertical-align: top;">topictrace</td>
+      <td style="vertical-align: top;">refid,catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tpwdwdidx</td>
+      <td style="vertical-align: top;">topicwords</td>
+      <td style="vertical-align: top;">word</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Note: the index names above are not relevant and included just for
+completeness.<br>
+<h2>Table Relations and Predefined Field Values<br>
+</h2>
+<table border="1">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Source<br>
+      </th>
+      <th style="vertical-align: top;">Destination<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">aliases.target</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">aolsearch.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">charset.id</td>
+      <td style="vertical-align: top;">chedne.id for chedne.type=1</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">chedne.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">chedne.id</td>
+      <td style="vertical-align: top;">charset.id for chedne.type=1</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">chedne.id</td>
+      <td style="vertical-align: top;">editor.id for chedne.type=2</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">chedne.id</td>
+      <td style="vertical-align: top;">newsgroup.id for chedne.type=3</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">counters.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">description.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">dispname.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">editor.id</td>
+      <td style="vertical-align: top;">chedne.id for chedne.type=2</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">externalpages.ages</td>
+      <td style="vertical-align: top;">ages.id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">externalpages.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">externalpages.linktype=1
+for link</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">externalpages.linktype=2
+for pdf</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">externalpages.linktype=3
+for rss</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">externalpages.linktype=4
+for atom</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">externalpages.type</td>
+      <td style="vertical-align: top;">types.id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">langlinks.dst</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">langlinks.lang</td>
+      <td style="vertical-align: top;">languages.id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">langlinks.src</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">letterbar.dst</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">letterbar.src</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">narrow.dst</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">narrow.src</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">newsgroup.id</td>
+      <td style="vertical-align: top;">chedne.id for chedne.type=3</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">nlsinfo.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">nlsinfo.nlsid</td>
+      <td style="vertical-align: top;">nlssupport.serial</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">nlssupport.serial</td>
+      <td style="vertical-align: top;">nlsinfo.nlsid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">pagesearch.ages&amp;1=1
+for kids<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">pagesearch.ages&amp;2=2
+for teens<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">pagesearch.ages&amp;4=4
+for mature teens<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pagesearch.pageid</td>
+      <td style="vertical-align: top;">externalpages.id</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pagesearch.wordid</td>
+      <td style="vertical-align: top;">pagewords.wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pagewords.wordid</td>
+      <td style="vertical-align: top;">pagesearch.wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">redirects.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">related.dst</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">related.src</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symlinks.alias</td>
+      <td style="vertical-align: top;">aliases.serial</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symlinks.dst</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symlinks.src</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">terms.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicref.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicref.parentid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;" colspan="2">topicsearch.ages=1
+for items below "kids_and_teens"<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicsearch.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicsearch.wordid</td>
+      <td style="vertical-align: top;">topicwords.wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topictrace.catid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topictrace.refid</td>
+      <td style="vertical-align: top;">topics.catid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicwords.wordid</td>
+      <td style="vertical-align: top;">topicsearch.wordid</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">types.id</td>
+      <td style="vertical-align: top;">externalpages.type</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Note: all integer values of zero denote 'no reference' or 'not set',
+respectively. '&amp;' in the above table means 'binary and'.<br>
+</body>
+</html>

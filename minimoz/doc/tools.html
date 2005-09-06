@@ -1,0 +1,451 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>dmoz.org RDF Tools</title>
+  <meta content="Andreas Steinmetz, ast@domdv.de" name="author">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#000099" link="#000099" vlink="#990099">
+<h1>dmoz.org RDF Tools</h1>
+The <a href="http://rdf.dmoz.org/">dmoz.org RDF</a> tools are supposed
+to allow everyone to run a searchable read only database constructed
+from the exported dmoz.org RDF data as well as to extract all URLs
+related to one or more specified categories. The database backends
+supported out of the box are <a href="http://www.mysql.com/">MySQL</a>,
+<a href="http://www.postgresql.org/">PostgreSQL</a> and <a
+ href="http://www.sqlite.org/">SQLite</a>. The tools consist of the
+following set:<br>
+<ul>
+  <li><a href="#buildmoz">buildmoz</a> - build a searchable database
+from the specified input files<br>
+  </li>
+  <li><a href="#minimoz">minimoz</a> - template driven web server
+serving the database content<br>
+  </li>
+  <li><a href="#moztract">moztract</a> - extract all URLs associated
+with the given categories from the database<br>
+  </li>
+  <li><a href="#loadmoz">loadmoz</a> - web server load generator<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="buildmoz"></a>buildmoz</h2>
+Build a searchable and semantically correct database from the given
+input files. All input needs to be in <a
+ href="http://www.ietf.org/rfc/rfc2044.txt">UTF-8</a> encoded <a
+ href="http://www.unicode.org/">Unicode</a>, otherwise processing is
+either aborted or the offending data set is skipped. Semantically
+incorrect data, e.g. data that point to a not existing record, is
+skipped and information about such data is printed in verbose mode.
+Thus <span style="font-style: italic;">buildmoz</span> can be used to
+detect database inconsistencies. Note that the user specified for
+database access must have full rights on the database specified
+including dropping and creating the database.<br>
+<h3>Usage Information:</h3>
+<pre>Usage: buildmoz [-va] [-d db] [-s structure] [-c content]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-r redirect] [-t terms] [-u user]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-p password|-]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '-' as password means read from stdin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -v&nbsp; verbose mode
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -a&nbsp; generate all possible data</pre>
+<h3>The following options can be specified:</h3>
+<ul>
+  <li><span style="font-weight: bold;">-v</span><br>
+Be verbose and print out information about problematic input data that
+either are reworked or skipped. Otherwise only minimalistic processing
+info is printed.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-a</span><br>
+Produce all possible tables and columns. Otherwise only the required
+tables and columns are generated.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-d</span> <span
+ style="font-weight: bold;">db</span><br>
+Use the database <span style="font-weight: bold;">db</span> rather
+than the default database. The database specifier db as well as the
+default database are <a href="#Database_Specification">database
+dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-s</span> <span
+ style="font-weight: bold;">structure</span><br>
+Use <span style="font-weight: bold;">structure</span> instead of the
+default <span style="font-style: italic;">structure.rdf.u8.gz</span>
+as the structure source file.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-c</span> <span
+ style="font-weight: bold;">content</span><br>
+Use <span style="font-weight: bold;">content</span> instead of the
+default <span style="font-style: italic;">content.rdf.u8.gz</span> as
+the content source file.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-r</span> <span
+ style="font-weight: bold;">redirect</span><br>
+Use <span style="font-weight: bold;">redirect</span> instead of the
+default <span style="font-style: italic;">redirect.rdf.u8.gz</span> as
+the redirects source file<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-t</span> <span
+ style="font-weight: bold;">terms</span><br>
+Use <span style="font-weight: bold;">terms</span> instead of the
+default <span style="font-style: italic;">terms.rdf.u8.gz</span> as
+the terms source file.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-u</span> <span
+ style="font-weight: bold;">user</span><br>
+Use the username <span style="font-weight: bold;">user</span> when
+connecting to the database rather than the default user. The default
+username is <a href="#Database_Specification">database dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-p</span> <span
+ style="font-weight: bold;">password</span><br>
+Use the password <span style="font-weight: bold;">password</span> when
+connecting to the database rather than the default of no password. If
+the password is <span style="font-style: italic;">-</span> (a dash)
+the password is read from standard input.<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="minimoz"></a>minimoz</h2>
+Template driven threaded web server. The web server is mostly HTTP/1.1
+compliant but lacks certain features like logging. Currently it doesn't
+use a database connection pool but one database connection per client
+served. The layout of the data served is quite flexible due to the
+template processing. See the included samples and the template
+documentation for details. Note that the user specified for database
+access needs to have read access the database created by buildmoz and
+must have the right to create temporary tables.<br>
+<h3>Usage Information:<br>
+</h3>
+<pre>Usage: minimoz [-zn] [-d db] [-t template] [-R timeout]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-T timeout] [-L clientlimit] [-P pidfile]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-i listenip] [-l listenport] [-U runas]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-u database-user] [-p database-password]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-a alternative-db] [-C pool-limit]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '-' as password means read from stdin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -z&nbsp; enable gzip/deflate content encoding
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -n&nbsp; don't daemonize</pre>
+<h3>The following options can be specified:</h3>
+<ul>
+  <li><span style="font-weight: bold;">-z</span><br>
+Enable <span style="font-style: italic;">gzip</span> and <span
+ style="font-style: italic;">deflate</span> content encoding. This can
+be very useful for reduction of required bandwidth but requires more
+cpu.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-n</span><br>
+Don't detach from the controlling terminal. Useful for testing and
+debugging.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-d</span> <span
+ style="font-weight: bold;">db</span><br>
+Use the database <span style="font-weight: bold;">db</span> rather
+than the default database. The database specifier db as well as the
+default database are <a href="#Database_Specification">database
+dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-t</span> <span
+ style="font-weight: bold;">template</span><br>
+Use <span style="font-weight: bold;">template</span> instead of the
+default <span style="font-style: italic;">minimoz.tmpl</span> as the
+template file. See the included samples and template documentation for
+further information.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-R</span> <span
+ style="font-weight: bold;">timeout</span><br>
+Set the request timeout to <span style="font-weight: bold;">timeout</span>
+seconds. This timeout specifies the time in which a client must have
+delivered the complete http request, otherwise the connection is
+closed. The default is 10, the valid range is 5 to 60.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-T</span> <span
+ style="font-weight: bold;">timeout</span><br>
+Set the connection timeout to <span style="font-weight: bold;">timeout</span>
+seconds This timeout specifies the maximum time that can expire after a
+client has established a connection until the connection is closed. The
+default is 60, the valid range is 10 to 900.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-L</span> <span
+ style="font-weight: bold;">clientlimit</span><br>
+Set the maximum amount of parallel client connections to <span
+ style="font-weight: bold;">clientlimit</span>. The default is 50, the
+valid range is 1 to a system imposed limit (the maximum number of
+threads allowed.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-P</span> <span
+ style="font-weight: bold;">pidfile</span><br>
+Write the main process pid to the file specified by <span
+ style="font-weight: bold;">pidfile</span>. Note that this file will be
+created under the user and group specified with the <span
+ style="font-weight: bold;">-U</span> option.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-i</span> <span
+ style="font-weight: bold;">listenip</span><br>
+Listen on the IP specified by <span style="font-weight: bold;">listenip</span>
+instead of all possible IPs. This is useful to bind the application to
+a specific interface.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-l</span> <span
+ style="font-weight: bold;">listenport</span><br>
+Listen on the port specified by <span style="font-weight: bold;">listenport</span>
+instead of the default of 2345.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-U</span> <span
+ style="font-weight: bold;">runas</span><br>
+Run as the user specified by <span style="font-weight: bold;">runas</span>
+instead of the current user. The user specified is looked up in <span
+ style="font-style: italic;">/etc/passwd</span> and the current user
+and group is switched to the user and group specified by the passwd
+file entry. Note that the switch is performed after the listening
+socket is created so a privileged socket can be used together with an
+unprivileged user.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-u</span> <span
+ style="font-weight: bold;">user</span><br>
+Use the username <span style="font-weight: bold;">user</span> when
+connecting to the database rather than the default user. The default
+username is <a href="#Database_Specification">database dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-p</span> <span
+ style="font-weight: bold;">password</span><br>
+Use the password <span style="font-weight: bold;">password</span> when
+connecting to the database rather than the default of no password. If
+the password is <span style="font-style: italic;">-</span> (a dash)
+the password is read from standard input.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-a</span> <span
+ style="font-weight: bold;">alternative-db</span><br>
+Use the database <span style="font-weight: bold;">alternative-db</span>
+as an alternative database. It is possible to switch between the
+databases specified by <span style="font-weight: bold;">-d</span> and <span
+ style="font-weight: bold;">-a</span> at runtime to enable seamless
+database updates.<br>
+  </li>
+  <li><span style="font-weight: bold;">-C</span> <span
+ style="font-weight: bold;">pool-limit</span><br>
+Use a connection pool of up to <span style="font-weight: bold;">pool-limit</span>
+persistent database connections. If this option is not given a temporary
+database connection is used for every client request.<br>
+  </li>
+</ul>
+<h3>Signals:</h3>
+<ul>
+  <li><span style="font-weight: bold;">SIGHUP</span><br>
+Reload the template specified with the <span style="font-weight: bold;">-t</span>
+option. If the reload fails the old template will be kept in use.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">SIGINT</span><br>
+Terminate the application. The first SIGINT initiates termination but
+allows for a graceful shutdown, i.e. all existing client connections
+are served first. The second SIGINT causes instant application
+termination.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">SIGTERM</span><br>
+  </li>
+  <>Terminate the application. All existing client connections are
+served first.<br>
+  <br>
+  </><li><span style="font-weight: bold;">SIGUSR1</span><br>
+Switch to the database specified with the <span
+ style="font-weight: bold;">-d</span> option.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">SIGUSR2</span><br>
+Switch to the database specified with the <span
+ style="font-weight: bold;">-a</span> option. If the option was not
+specified no action is taken.<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="moztract"></a>moztract</h2>
+Extracts all URLs associated with the given categories and the
+subcategories of these, optionally including the same categories in
+other languages. Note that the user specified for database access needs
+read access to the specified database.<br>
+<h3>Usage Information:<br>
+</h3>
+<pre>Usage: moztract [-a] [-d db] [-u user] [-p password|-] &lt;tree&gt; [...]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '-' as password means read from stdin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -a&nbsp; extract alternate languages, too
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;tree&gt; is either a minimoz URL or the URI of this url, e.g.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '/World/'</pre>
+<h3>The following options can be specified:</h3>
+<ul>
+  <li><span style="font-weight: bold;">-a</span><br>
+Process alternate languages for all categories encountered, too.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-d</span> <span
+ style="font-weight: bold;">db</span><br>
+Use the database <span style="font-weight: bold;">db</span> rather
+than the default database. The database specifier db as well as the
+default database are <a href="#Database_Specification">database
+dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-u</span> <span
+ style="font-weight: bold;">user</span><br>
+Use the username <span style="font-weight: bold;">user</span> when
+connecting to the database rather than the default user. The default
+username is <a href="#Database_Specification">database dependent</a>.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-p</span> <span
+ style="font-weight: bold;">password</span><br>
+Use the password <span style="font-weight: bold;">password</span> when
+connecting to the database rather than the default of no password. If
+the password is <span style="font-style: italic;">-</span> (a dash)
+the password is read from standard input.<br>
+  </li>
+</ul>
+<h3>Category Specification:</h3>
+<span style="font-weight: bold;">&lt;tree&gt;</span> specifies a base
+category. It can be a web server URL like <span
+ style="font-style: italic;">http://localhost:99/World/</span> or it
+can be a web server based URI like <span style="font-style: italic;">/World/</span>.
+At least one category must be given. There can be as many categories
+specified as required.<br>
+<br>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="loadmoz"></a>loadmoz</h2>
+Threaded load generator (not only) for the included web server. It
+sequentially retrieves all URLs specified once to gather reference data
+and then performs the actual load test. This has the side effect that
+usually disk IO required by the database is done during the reference
+data gathering so the load test will be performed on hot caches.
+Testing is limited to <span style="font-style: italic;">GET</span>
+requests. The load generator can be used to gather performance
+information as well as for development purposes, to detect e.g. memory
+leaks in the web server or the database server itself.<br>
+<h3>Usage Information:</h3>
+<pre>Usage: loadmoz [-a|-g|-d] [-c clients] [-r repeats] &lt;url&gt; [...]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -a&nbsp;&nbsp; any encoding (gzip,deflate)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -g&nbsp;&nbsp; gzip encoding
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -d&nbsp;&nbsp; deflate encoding
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -c&nbsp;&nbsp; parallel clients (1-100, default 1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -r&nbsp;&nbsp; request repeats (1-10000, default 1)</pre>
+<h3>The following options can be specified:</h3>
+<ul>
+  <li><span style="font-weight: bold;">-a</span><br>
+Offer any of <span style="font-style: italic;">gzip</span> or <span
+ style="font-style: italic;">deflate</span> content encoding to the web
+server.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-g</span><br>
+Offer <span style="font-style: italic;">gzip</span> content encoding
+to the web server.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-d</span><br>
+Offer <span style="font-style: italic;">deflate</span> content
+encoding to the web server.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-c</span> <span
+ style="font-weight: bold;">clients</span><br>
+Execute the given requests with <span style="font-weight: bold;">clients</span>
+parallel clients. The default is 1, the valid range is 1 to 100.<br>
+    <br>
+  </li>
+  <li><span style="font-weight: bold;">-r</span> <span
+ style="font-weight: bold;">repeat</span><br>
+Request the specified URL set <span style="font-weight: bold;">repeat</span>
+times per client. This means that the sequence of URLs specified is
+requested <span style="font-weight: bold;">repeat</span> times in the
+specified sequence. The default is 1, the valid range is 1 to 10000.<br>
+  </li>
+</ul>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="Database_Specification"></a>Database Access Specification</h2>
+The database specifier, the default database as well as the database
+user depend on the database actually used. The following table shows
+these data for the databases currently supported:<br>
+<br>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top; text-align: center;">Database<br>
+      </th>
+      <th
+ style="vertical-align: top; text-align: center; white-space: nowrap;">Database
+Specifiers<br>
+      </th>
+      <th style="vertical-align: top; text-align: center;">Default
+Database<br>
+      </th>
+      <th style="vertical-align: top; text-align: center;">Default
+Database User<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">MySQL<br>
+      </td>
+      <td style="vertical-align: top; white-space: nowrap;">database<br>
+unix-domain-socket<span style="font-weight: bold;"> : </span>database<br>
+host <span style="font-weight: bold;">:</span> port <span
+ style="font-weight: bold;">:</span> database<br>
+      </td>
+      <td style="vertical-align: top;">'dmoz' (prepended by unix domain
+socket or 'localhost <span style="font-weight: bold;">:</span> port'
+if the default unix domain socket or the default port is specified in
+the database header files)<br>
+      </td>
+      <td style="vertical-align: top;">' ' (a blank character, which
+means anonymous user)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">PostgreSQL<br>
+      </td>
+      <td style="vertical-align: top; white-space: nowrap;">database<br>
+unix-domain-socket<span style="font-weight: bold;"> : </span>database<br>
+host <span style="font-weight: bold;">:</span> database<br>
+host <span style="font-weight: bold;">:</span> port <span
+ style="font-weight: bold;">:</span> database<br>
+      </td>
+      <td style="vertical-align: top;">'dmoz'<br>
+      </td>
+      <td style="vertical-align: top;">'dmoz'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">SQLite<br>
+      </td>
+      <td style="vertical-align: top; white-space: nowrap;">database-file<br>
+      </td>
+      <td style="vertical-align: top;">'dmoz.db'<br>
+      </td>
+      <td style="vertical-align: top;">n/a<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+</body>
+</html>

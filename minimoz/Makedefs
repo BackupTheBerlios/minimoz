@@ -1,0 +1,93 @@
+#
+# (c) 2004 Andreas Steinmetz, ast@domdv.de
+#
+#------------------------------------------------------------------------------
+#                           Database Selection
+#------------------------------------------------------------------------------
+#
+# no database backend (only for testing and input control)
+#
+#NULLDB=1
+#
+# definition for sqlite 3.0.7 or later
+#
+#SQLITE=/usr/local/sqlite
+#
+# definition for MySQL 4.0 or later (tested with 4.0.21)
+#
+#MYSQL=/usr/local/mysql
+#
+# definitions for embedded MySQL 4.1.7 or later (not recommended)
+#
+#MYSQLENG=/usr/local/mysql
+#ENGINELIBS=-lpthread -lstdc++ -lcrypto -lssl -lcrypt
+#
+# definitions for PostgreSQL 7.4.1 or later (discouraged)
+#
+#PGSQL=/usr/local/pgsql
+#
+#------------------------------------------------------------------------------
+#                                Libraries
+#------------------------------------------------------------------------------
+#
+# definitions for zlib 1.0.4 or later (mandatory)
+#
+ZLIB=/usr
+#
+# definitions for curl 7.10 or later (optional, required for loadmoz)
+#
+CURL=/usr
+#
+# build with dmalloc memory allocation debugging (development only)
+#
+#DMALLOC=/usr/local/dmalloc
+#
+#------------------------------------------------------------------------------
+#                            Compiler and Linker
+#------------------------------------------------------------------------------
+#
+# compiler and compile flags
+#
+CC=gcc
+CFLAGS=-Wall -O3 -fomit-frame-pointer -minline-all-stringops
+#
+# linker, linker flags and shared library extension
+#
+LD=gcc
+LDFLAGS=-s
+RPATHFLAG=-Wl,-rpath,
+SHLIBFLAGS=-shared
+SHEXT=so
+#
+#------------------------------------------------------------------------------
+#                   System Library Replacement Routines
+#------------------------------------------------------------------------------
+#
+# uncomment if your system doesn't provide the related function(s)
+#
+#INCLUDED_GMTIME_R=1
+#INCLUDED_STRTOK_R=1
+#INCLUDED_STRFTIME=1
+#INCLUDED_POLL=1
+#INCLUDED_DAEMON=1
+#INCLUDED_SETRESUID=1
+#INCLUDED_SETRESGID=1
+#INCLUDED_TIMES=1
+#INCLUDED_STRCASECMP=1
+#INCLUDED_STRNCASECMP=1
+#INCLUDED_MUTEX=1
+#INCLUDED_SEM=1
+#INCLUDED_GETOPT=1
+#
+#------------------------------------------------------------------------------
+#                         Database Build Tools
+#------------------------------------------------------------------------------
+#
+# retrieve command for the rfd.dmoz.org files for database build
+#
+RETRIEVECMD=curl -q --connect-timeout 30 -O -R -z $$i
+#RETRIEVECMD=wget -N -nd --timeout=30 --tries=5
+#
+# dumpcheck binary (1.9 or later) if installed on your system (optional)
+#
+#DUMPCHECK=/usr/local/bin/dumpcheck

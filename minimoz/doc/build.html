@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Software and Database Build</title>
+  <meta content="Andreas Steinmetz, ast@domdv.de" name="author">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#000099" link="#000099" vlink="#990099">
+<h1>Software and Database Build<br>
+</h1>
+First things first. You don't need to continue if you don't have<br>
+<ul>
+  <li>at least <span style="font-weight: bold;">512MB of system memory</span></li>
+  <li>at least <span style="font-weight: bold;">5GB of free disk space</span>
+(9GB for PostgreSQL)</li>
+  <li>a reasonably <span style="font-weight: bold;">fast processor</span>
+(e.g. an AMD Athlon XP 2400+)</li>
+  <li><span style="font-weight: bold;">posix threads</span> support<br>
+  </li>
+</ul>
+You will first have to edit <span style="font-style: italic;">Makedefs</span>.
+Select the database you want to use, uncomment the associated line and
+set the path to the database installation prefix. You have the choice
+between the following databases:<br>
+<ul>
+  <li>NULL - no database at all, this can be used if input validation
+only is desired<br>
+  </li>
+  <li><a href="http://www.mysql.com/">MySQL</a> - version <span
+ style="font-weight: bold;">4.0 and above</span> (<span
+ style="text-decoration: underline;">do not use</span> versions 4.1 up
+to and including 4.1.7 due to a severe memory leak), make sure the database
+wasbuilt with '<span style="font-weight: bold;">--enable-thread-safe-client</span>'<br>
+  </li>
+  <li><a href="http://www.postgresql.org/">PostgreSQL</a> - version <span
+ style="font-weight: bold;">7.4.1 and above</span>, make sure the
+database was built with '<span style="font-weight: bold;">--enable-thread-safety</span>'<br>
+  </li>
+  <li><a href="http://www.sqlite.org/">SQLite</a> - version <span
+ style="font-weight: bold;">3.0.7 and above</span>, make sure the
+database was built with '<span style="font-weight: bold;">--enable-threadsafe</span>'
+which is <span style="text-decoration: underline; font-weight: bold;">not</span>
+the default for binary packages<br>
+  </li>
+</ul>
+Then you need to specify the installation paths of the mandatory and
+optional libraries. These are:<br>
+<ul>
+  <li><a href="http://www.gzip.org/zlib/">zlib</a> - <span
+ style="text-decoration: underline; font-weight: bold;">mandatory</span>,
+version <span style="font-weight: bold;">1.0.4 or above</span><br>
+  </li>
+  <li><a href="http://curl.haxx.se/">curl</a> - optional, required for
+load test utility, version <span style="font-weight: bold;">7.10 or
+above</span><br>
+  </li>
+  <li><a href="http://dmalloc.com/">dmalloc</a> - optional, for
+development only, version <span style="font-weight: bold;">5.4.2 or
+above</span></li>
+</ul>
+Now select compiler and linker. Adapt the compile and link flags
+according to your system requirements. Hopefully you are set now. Run <span
+ style="font-style: italic;">make</span>. If the build fails due to
+your system libraries lacking certain functions see the section <span
+ style="font-style: italic;">System Library Replacement Routines</span>
+in <span style="font-style: italic;">Makedefs</span> and uncomment the
+the required replacement routines. If there is a routine missing that
+is not included you will have to write a replacement yourself.
+Hopefully you have now a complete build.<br>
+<br>
+Time to create the first database. Again, edit <span
+ style="font-style: italic;">Makedefs</span> and skip to <span
+ style="font-style: italic;">Database Build Tools</span>. Select either
+<a href="http://curl.haxx.se/">curl</a> or <a
+ href="http://www.gnu.org/software/wget/wget.html">wget</a> as the
+retrieval command depending on what's installed on your system - or
+change the retrieval command line to any other suitable retrieval tool.
+Optionally you may want to use <a
+ href="http://www.rainwaterreptileranch.org/steve/sw/odp/">dumpcheck</a>
+version 1.9 or above for XML validation of the input files. Note that
+version 1.9 requires the following patch:<br>
+<pre>--- dumpcheck-1.9-orig/dumpcheck.c &nbsp; 2004-11-27 13:30:33.000000000 +0100</pre>
+<pre>+++ dumpcheck/dumpcheck.c&nbsp;&nbsp; 2004-10-15 15:08:54.000000000 +0200</pre>
+<pre>@@ -206,7 +206,7 @@</pre>
+<pre><>&nbsp;&nbsp;&nbsp;&nbsp; printf("%lu bytes processed\nUTF-8 Sequence error(s): %i\nXML Character encoding error(s): %i\n",offset,Uerr,Xerr);</></pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp; if(WFerr) printf("W3C XML well-formedness: Passed\n");</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp; else printf("W3C XML well-formedness: Failed\n");</pre>
+<pre>-&nbsp;&nbsp;&nbsp; if(WFerr || Uerr || Xerr) return 1;</pre>
+<pre>+&nbsp;&nbsp;&nbsp; if(!WFerr || Uerr || Xerr) return 1;</pre>
+<pre>&nbsp;&nbsp;&nbsp;&nbsp; return 0;</pre>
+<pre>&nbsp;}</pre>
+Make sure that you have the database rights set properly. For the
+included demo database build the <a name="user"></a>user is an
+anonymous user for <a href="http://www.mysql.com/">MySQL</a> and the
+user <span style="font-style: italic;">dmoz</span> with no password
+for <a href="http://www.postgresql.org/">PostgreSQL</a>. In both cases
+full drop/create rights for the database <span
+ style="font-style: italic;">dmoz</span> are required. For <a
+ href="http://www.sqlite.org/">SQLite</a> only write access to the <span
+ style="font-style: italic;">data</span> directory is required. Assert
+that you have sufficient disk space. About <span
+ style="text-decoration: underline; font-weight: bold;">400MB</span>
+for the input files is required. The database disk space required is
+about <span style="text-decoration: underline; font-weight: bold;">4GB</span>
+for SQLite and MySQL and <span
+ style="text-decoration: underline; font-weight: bold;">8GB</span> for
+PostgreSQL. The build tool itself requires about 400MB of memory, so
+assert that you have at least <span
+ style="text-decoration: underline; font-weight: bold;">512MB system
+memory</span>. A reasonably fast CPU (e.g. an AMD Athlon XP 2400+) is
+essential. Run <span style="font-style: italic;">make db</span> and
+take a long break. Depending on your Internet connectivity the input
+file download will take at least 30 minutes. Depending on the database
+used and your system the database build will take anything from about
+40 minutes to more than 2 hours.<br>
+<br>
+If the database build successfully completes you're mostly done. For
+MySQL or PostgreSQL you have to install the user defined function <span
+ style="font-style: italic;">dmozcoll</span>, which is included in the
+shared libraries <span style="font-style: italic;">dmozcollmy.so</span>
+or <span style="font-style: italic;">dmozcollpg.so</span>,
+respectively. Copy the required library file to a convenient place
+which is in your library search path, e.g. <span
+ style="font-style: italic;">/usr/lib</span> and run your shared
+library cache configuration utility <span style="font-style: italic;">(ldconfig</span>
+on Linux). Then log into your database as the database superuser and
+execute:<br>
+<ul>
+  <li>MySQL:&nbsp;&nbsp;&nbsp;&nbsp; CREATE FUNCTION dmozcoll RETURNS
+STRING SONAME 'dmozcollmy.so';<br>
+  </li>
+  <li>PostgreSQL:&nbsp;&nbsp;&nbsp;&nbsp; CREATE FUNCTION dmozcoll(text)
+RETURNS text AS '/usr/lib/dmozcollpg.so','dmozcoll' LANGUAGE C STRICT;<br>
+  </li>
+</ul>
+You now can run the included web server but first make sure that the
+default database user (<a href="#user">see above</a>) has the right to
+create temporary tables. For the included samples run either of <span
+ style="font-style: italic;">minimal.sh</span>, <span
+ style="font-style: italic;">minimoz.sh</span> or <span
+ style="font-style: italic;">stylesheet.sh</span> to get started.<br>
+<br>
+There is no further installation included as this will for sure differ
+between the users of this package. Just copy the tools created to some
+convenient place on your system.<br>
+<br>
+And oh, yes, make sure that for MySQL and PostgreSQL installations you
+don't use the default user settings for real use.<br>
+<br>
+</body>
+</html>

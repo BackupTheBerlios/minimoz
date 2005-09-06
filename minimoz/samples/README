@@ -1,0 +1,17 @@
+The following sample templates are available:
+
+minimal.tmpl	- minimalistic without any real layout
+minimoz.tmpl	- somewhat similar to dmoz.org
+stylesheet.tmpl	- xhtml with stylesheet, my personal favorite
+
+The template outputs were developed using Mozilla/Unix, then checked for
+W3C compliance and finally carefully modified to render also in the
+brainless bogosity from Redmond they call a browser.
+
+All templates (c) 2004 Andreas Steinmetz, ast@domdv.de
+
+As for the images except for minimoz.gif these were taken either from
+dmoz.org (star.gif) or gif collections on the web. It may be necessary
+to check for copyrights if you're going to use these images in a
+production environment. minimoz.gif is (c) 2004 Andreas Steinmetz,
+ast@domdv.de and can be freely used.

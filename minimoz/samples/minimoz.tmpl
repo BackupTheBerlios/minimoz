@@ -1,0 +1,928 @@
+#
+# Minimoz example somewhat similar in style to dmoz.org
+# (c) 2004 Andreas Steinmetz, ast@domdv.de
+#
+*******************************************************************************
+
+<+var:pagestart><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8"><-var>
+<+var:pretitle><title>minimoz<-var>
+
+<+var:advancedtitle> - Advanced Search<-var>
+
+<+var:advancedtitle:de de_de de_at de_ch> - Erweiterte Suche<-var>
+
+<+var:resultstitle> - Search Results<-var>
+
+<+var:resultstitle:de de_de de_at de_ch> - Suchergebnisse<-var>
+
+<+var:bodystart></title>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066" alink="#FF0000">
+<table border="0" bgcolor="#5588EE" cellpadding="3" cellspacing="0" width="100%"><tr><td nowrap align="center" valign="middle"><b>minimoz - dmoz.org database</b></td></tr></table><-var>
+
+<+var:bodystart: de de_de de_at de_ch></title>
+</head>
+<body bgcolor="#ffffff" text="#000000" link="#3300cc" vlink="#660066" alink="#FF0000">
+<table border="0" bgcolor="#5588EE" cellpadding="3" cellspacing="0" width="100%"><tr><td nowrap align="center" valign="middle"><b>minimoz - dmoz.org Datenbank</b></td></tr></table><-var>
+
+<+var:advancedstart><table border="0" width="100%"><tr><td align="left"><a href="/"><small>Home</small></a></td><td align="right"><a href="/"><small>Home</small></a></td></tr></table>
+<center><b>Advanced Search</b></center><-var>
+
+<+var:advancedstart:de de_de de_at de_ch><table border="0" width="100%"><tr><td align="left"><a href="/"><small>Home</small></a></td><td align="right"><a href="/"><small>Home</small></a></td></tr></table>
+<center><b>Erweiterte Suche</b></center><-var>
+
+<+var:bodytail><table border="0" bgcolor="#5588EE" cellpadding="3" cellspacing="0" width="100%"><tr><td nowrap align="center" valign="middle"><b>implementation by ast@domdv.de</b></td></tr></table>
+<-var>
+
+<+var:bodytail:de de_de de_at de_ch><table border="0" bgcolor="#5588EE" cellpadding="3" cellspacing="0" width="100%"><tr><td nowrap align="center" valign="middle"><b>Implementation: ast@domdv.de</b></td></tr></table>
+<-var>
+
+<+var:pageend></body>
+</html><-var>
+
+<+var:extsearch1><p><table border="0" width="100%"><tr><td nowrap align="left" width="10%" valign="baseline"><-var>
+
+<+var:extsearch2></td><td nowrap align="center" width="80%" valign="baseline"><-var>
+
+<+var:extsearch3></td><td nowrap align="right" width="10%">&nbsp;</td></tr></table><hr><-var>
+
+<+var:hist1><table border="0" width="100%"><tr><td nowrap align="left"><table border="0" cellpadding="0" cellspacing="0"><tr><-var>
+
+<+var:hist2><td align="left">&nbsp;</td><-var>
+
+<+var:hist3></tr></table></td><td>&nbsp;</td><-var>
+
+<+var:hist4></tr></table><-var>
+
+<+var:catlink1><table border="0" width="100%"><tr><td nowrap align="left"><-var>
+
+<+var:catlink2></td><td nowrap align="right"><font size="-1"><a href="/">Home</a></font></td></tr></table><hr><-var>
+
+<+var:welcome>
+<!-- start of original dmoz.org homepage -->
+<center><table cellspacing="4" cellpadding="4"><tr><td valign=top>
+
+<b><a href="/Arts/">Arts</a></b><br>
+<small>
+<a href="/Arts/Movies/">Movies</a>,
+<a href="/Arts/Television/">Television</a>,
+<a href="/Arts/Music/">Music</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Business/">Business</a></b><br>
+<small>
+<a href="/Business/Employment/">Jobs</a>,
+<a href="/Business/Real_Estate/">Real Estate</a>,
+<a href="/Business/Investing/">Investing</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Computers/">Computers</a></b><br>
+<small>
+<a href="/Computers/Internet/">Internet</a>,
+<a href="/Computers/Software/">Software</a>,
+<a href="/Computers/Hardware/">Hardware</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/Games/">Games</a></b><br>
+<small>
+<a href="/Games/Video_Games/">Video Games</a>,
+<a href="/Games/Roleplaying/">RPGs</a>,
+<a href="/Games/Gambling/">Gambling</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Health/">Health</a></b><br>
+<small>
+<a href="/Health/Fitness/">Fitness</a>,
+<a href="/Health/Medicine/">Medicine</a>,
+<a href="/Health/Alternative/">Alternative</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Home/">Home</a></b><br>
+<small>
+<a href="/Home/Family/">Family</a>,
+<a href="/Home/Consumer_Information/">Consumers</a>,
+<a href="/Home/Cooking/">Cooking</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/Kids_and_Teens/"><font color="#ff0000">K</font><font color="339900">i</font><font color="#ff6600">d</font><font color="#0066ff">s</font> and Teens</a></b><br>
+<small>
+<a href="/Kids_and_Teens/Arts/">Arts</a>,
+<a href="/Kids_and_Teens/School_Time/">School Time</a>,
+<a href="/Kids_and_Teens/Teen_Life/">Teen Life</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/News/">News</a></b><br>
+<small>
+<a href="/News/Media/">Media</a>,
+<a href="/News/Newspapers/">Newspapers</a>,
+<a href="/News/Weather/">Weather</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Recreation/">Recreation</a></b><br>
+<small>
+<a href="/Recreation/Travel/">Travel</a>,
+<a href="/Recreation/Food/">Food</a>,
+<a href="/Recreation/Outdoors/">Outdoors</a>,
+<a href="/Recreation/Humor/">Humor</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/Reference/">Reference</a></b><br>
+<small>
+<a href="/Reference/Maps/">Maps</a>,
+<a href="/Reference/Education/">Education</a>,
+<a href="/Reference/Libraries/">Libraries</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Regional/">Regional</a></b><br>
+<small>
+<a href="/Regional/North_America/United_States/">US</a>,
+<a href="/Regional/North_America/Canada/">Canada</a>,
+<a href="/Regional/Europe/United_Kingdom/">UK</a>,
+<a href="/Regional/Europe/">Europe</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Science/">Science</a></b><br>
+<small>
+<a href="/Science/Biology/">Biology</a>,
+<a href="/Science/Social_Sciences/Psychology/">Psychology</a>,
+<a href="/Science/Physics/">Physics</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/Shopping/">Shopping</a></b><br>
+<small>
+<a href="/Shopping/Vehicles/Autos/">Autos</a>,
+<a href="/Shopping/Clothing/">Clothing</a>,
+<a href="/Shopping/Gifts/">Gifts</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Society/">Society</a></b><br>
+<small>
+<a href="/Society/People/">People</a>,
+<a href="/Society/Religion_and_Spirituality/">Religion</a>,
+<a href="/Society/Issues/">Issues</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Sports/">Sports</a></b><br>
+<small>
+<a href="/Sports/Baseball/">Baseball</a>,
+<a href="/Sports/Soccer/">Soccer</a>,
+<a href="/Sports/Basketball/">Basketball</a>...
+</small>
+
+</td></tr>
+
+<tr><td colspan=3 valign=top>
+<b><a href="/World/">World</a></b><br>
+<small>
+<a href="/World/Deutsch/">Deutsch</a>,
+<a href="/World/Espa%c3%b1ol/">Español</a>,
+<a href="/World/Fran%c3%a7ais/">Français</a>,
+<a href="/World/Italiano/">Italiano</a>,
+<a href="/World/Japanese/">Japanese</a>,
+<a href="/World/Nederlands/">Nederlands</a>,
+<a href="/World/Polska/">Polska</a>,
+<a href="/World/Dansk/">Dansk</a>,
+<a href="/World/Svenska/">Svenska</a>...
+</small>
+
+</td></tr></table></center>
+<!-- end of original dmoz.org homepage -->
+<p>
+<-var>
+
+<+var:welcome:de de_de de_at de_ch>
+<!-- start of german dmoz.org homepage by ast@domdv.de -->
+<center><table cellspacing="4" cellpadding="4"><tr><td valign=top>
+
+<b><a href="/World/Deutsch/Computer/">Computer</a></b><br>
+<small>
+<a href="/World/Deutsch/Computer/Internet/">Internet</a>,
+<a href="/World/Deutsch/Computer/Software/">Software</a>,
+<a href="/World/Deutsch/Computer/Hardware/">Hardware</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Freizeit/">Freizeit</a></b><br>
+<small>
+<a href="/World/Deutsch/Freizeit/Reisen/">Reisen</a>,
+<a href="/World/Deutsch/Freizeit/Essen_und_Trinken/">Essen und Trinken</a>,
+<a href="/World/Deutsch/Freizeit/Humor/">Humor</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Gesellschaft/">Gesellschaft</a></b><br>
+<small>
+<a href="/World/Deutsch/Gesellschaft/Menschen/">Menschen</a>,
+<a href="/World/Deutsch/Gesellschaft/Religion_und_Spiritualit%c3%a4t/">Religion</a>,
+<a href="/World/Deutsch/Gesellschaft/Themen/">Themen</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/World/Deutsch/Gesundheit/">Gesundheit</a></b><br>
+<small>
+<a href="/World/Deutsch/Gesundheit/Fitness/">Fitness</a>,
+<a href="/World/Deutsch/Gesundheit/Medizin/">Medizin</a>,
+<a href="/World/Deutsch/Gesundheit/Alternative_Medizin/">Alternative Medizin</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/Kids_and_Teens/International/Deutsch/"><font color="#ff0000">K</font><font color="339900">i</font><font color="#ff6600">n</font><font color="#0066ff">d</font><font color="#009966">e</font><font color="#006699">r</font> und Jugendliche</a></b><br>
+<small>
+<a href="/Kids_and_Teens/International/Deutsch/Kultur/">Kultur</a>,
+<a href="/Kids_and_Teens/International/Deutsch/Schulzeit/">Schulzeit</a>,
+<a href="/Kids_and_Teens/International/Deutsch/Teens/">Teenager</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Kultur/">Kultur</a></b><br>
+<small>
+<a href="/World/Deutsch/Kultur/Film/">Film</a>,
+<a href="/World/Deutsch/Medien/Fernsehen/">Fernsehen</a>,
+<a href="/World/Deutsch/Kultur/Musik/">Musik</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/World/Deutsch/Medien/">Medien</a></b><br>
+<small>
+<a href="/World/Deutsch/Medien/Aktuelle_Nachrichten/">Nachrichten</a>,
+<a href="/World/Deutsch/Regional/Europa/Deutschland/Nachrichten_und_Medien/Zeitungen/">Zeitungen</a>,
+<a href="/World/Deutsch/Medien/Aktuelle_Nachrichten/Wetter/">Wetter</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Online-Shops/">Online-Shops</a></b><br>
+<small>
+<a href="/World/Deutsch/Online-Shops/Fahrzeuge/Autos/">Autos</a>,
+<a href="/World/Deutsch/Online-Shops/Bekleidung/">Bekleidung</a>,
+<a href="/World/Deutsch/Online-Shops/Geschenke/">Geschenke</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Regional/">Regional</a></b><br>
+<small>
+<a href="/World/Deutsch/Regional/Europa/Deutschland/">Deutschland</a>,
+<a href="/World/Deutsch/Regional/Europa/">Europa</a>,
+<a href="/World/Deutsch/Regional/Amerika/">Amerika</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/World/Deutsch/Spiele/">Spiele</a></b><br>
+<small>
+<a href="/World/Deutsch/Spiele/Computerspiele/">Computerspiele</a>,
+<a href="/World/Deutsch/Spiele/Rollenspiele/">Rollenspiele</a>,
+<a href="/World/Deutsch/Spiele/Gl%c3%bccksspiel/">Gl&uuml;cksspiel</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Sport/">Sport</a></b><br>
+<small>
+<a href="/World/Deutsch/Sport/Ballsport/Fu%c3%9fball/">Fu&szlig;ball</a>,
+<a href="/World/Deutsch/Sport/Motorsport/Automobil/Formel_1/">Formel 1</a>,
+<a href="/World/Deutsch/Sport/Verb%c3%a4nde/">Verb&auml;nde</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Wirtschaft/">Wirtschaft</a></b><br>
+<small>
+<a href="/World/Deutsch/Wirtschaft/Besch%c3%a4ftigung/">Besch&auml;figung</a>,
+<a href="/World/Deutsch/Wirtschaft/Immobilien/">Immobilien</a>,
+<a href="/World/Deutsch/Wirtschaft/Kapitalanlage/">Kapitalanlage</a>...
+</small>
+
+</td></tr><tr><td valign=top>
+<b><a href="/World/Deutsch/Wissen/">Wissen</a></b><br>
+<small>
+<a href="/World/Deutsch/Wissen/Karten_und_Pl%c3%a4ne/">Karten und Pl&auml;ne</a>,
+<a href="/World/Deutsch/Wissen/Bildung/">Bildung</a>,
+<a href="/World/Deutsch/Wissen/Bibliotheken/">Bibliotheken</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Wissenschaft/">Wissenschaft</a></b><br>
+<small>
+<a href="/World/Deutsch/Wissenschaft/Naturwissenschaften/Biologie/">Biologie</a>,
+<a href="/World/Deutsch/Wissenschaft/Psychologie/">Psychologie</a>,
+<a href="/World/Deutsch/Wissenschaft/Naturwissenschaften/Physik/">Physik</a>...
+</small>
+
+</td><td valign=top>
+<b><a href="/World/Deutsch/Zuhause/">Zuhause</a></b><br>
+<small>
+<a href="/World/Deutsch/Gesellschaft/Familie/">Familie</a>,
+<a href="/World/Deutsch/Zuhause/Verbraucherinformationen/">Verbraucherinformationen</a>,
+<a href="/World/Deutsch/Zuhause/Kochen/">Kochen</a>...
+</small>
+
+</td></tr>
+
+<tr><td colspan=3 valign=top>
+<b><a href="/World/">Welt</a></b><br>
+<small>
+<a href="/World/Deutsch/">Deutsch</a>,
+<a href="/index.html">English</a>,
+<a href="/World/Fran%c3%a7ais/">Français</a>,
+<a href="/World/Italiano/">Italiano</a>,
+<a href="/World/Espa%c3%b1ol/">Español</a>,
+<a href="/World/Nederlands/">Nederlands</a>,
+<a href="/World/Dansk/">Dansk</a>,
+<a href="/World/Svenska/">Svenska</a>,
+<a href="/World/Polska/">Polska</a>,
+<a href="/World/Japanese/">Japanese</a>...
+</small>
+
+</td></tr></table></center>
+<!-- end of german dmoz.org homepage by ast@domdv.de -->
+<p>
+<-var>
+
+<+webnews>
+<+label>Google Groups<-label>
+<+pre>http://groups.google.com/groups?group=<-pre>
+<+post><-post>
+<-webnews>
+
+<+searchengine>
+<+label>All&nbsp;the&nbsp;Web<-label>
+<+pre>http://www.alltheweb.com/search?type=all&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.alltheweb.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>AltaVista<-label>
+<+pre>http://www.altavista.com/cgi-bin/query?q=<-pre>
+<+post><-post>
+<+home>http://www.altavista.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Google&nbsp;USENET<-label>
+<+pre>http://groups.google.com/groups?q=<-pre>
+<+post><-post>
+<+home>http://groups.google.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Google<-label>
+<+pre>http://www.google.com/search?num=10&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.google.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>HotBot<-label>
+<+pre>http://hotbot.lycos.com/?MT=<-pre>
+<+post>&amp;SM=MC&amp;DV=0&amp;LG=any&amp;DC=10&amp;DE=2<-post>
+<+home>http://www.hotbot.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Lycos<-label>
+<+pre>http://search.lycos.com/?lpv=1&amp;loc=searchhp&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.lycos.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Teoma<-label>
+<+pre>http://s.teoma.com/search?q=<-pre>
+<+post><-post>
+<+home>http://www.teoma.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Yahoo<-label>
+<+pre>http://search.yahoo.com/bin/search?p=<-pre>
+<+post><-post>
+<+home>http://www.yahoo.com/<-home>
+<-searchengine>
+
+<+gifimg:star>
+<+file>star.gif<-file>
+<+width>15<-width>
+<+height>16<-height>
+<-gifimg>
+
+<+topicquery:topicresults>
+<+limit>10<-limit>
+<+pre><p><h2>Categories:</h2><-pre>
+<+listin><ol start="1">
+<-listin>
+<+listout></ol>
+<-listout>
+<+elemin><li><b><-elemin>
+<+elemout></b><-elemout>
+<+totalin> &nbsp; <i>(<-totalin>
+<+totalout>)</i>
+<-totalout>
+<+morein><p><blockquote><b><-morein>
+<+moreout></b></blockquote>
+<-moreout>
+<+numsplit>.<-numsplit>
+<+opts>totalpages link more<-opts>
+<-topicquery>
+
+<+topicquery:topicresults:de de_de de_at de_ch>
+<+limit>10<-limit>
+<+pre><p><h2>Kategorien:</h2><-pre>
+<+listin><ol start="1">
+<-listin>
+<+listout></ol>
+<-listout>
+<+elemin><li><b><-elemin>
+<+elemout></b><-elemout>
+<+totalin> &nbsp; <i>(<-totalin>
+<+totalout>)</i>
+<-totalout>
+<+morein><p><blockquote><b><-morein>
+<+moreout></b></blockquote>
+<-moreout>
+<+numsplit>.<-numsplit>
+<+opts>totalpages link more<-opts>
+<-topicquery>
+
+<+contentquery:contentresults>
+<+limit>50<-limit>
+<+pre><p><h2>Sites:</h2><-pre>
+<+listin><ol start="#"><-listin>
+<+listout></ol>
+<-listout>
+<+elemin><li><-elemin>
+<+elemout>
+<-elemout>
+<+mediadatein>(<-mediadatein>
+<+mediadateout>)<-mediadateout>
+<+targetin><br><small><i>-- <-targetin>
+<+topicin> &nbsp; <-topicin>
+<+totalin> &nbsp; (<-totalin>
+<+totalout>)</i></small><br>&nbsp;
+<-totalout>
+<+prevnextdelim></b> &nbsp; &nbsp; <b><-prevnextdelim>
+<+prevnextin><table border="0" width="100%"><tr><td align="center" nowrap><b><-prevnextin>
+<+prevnextout></b></td></tr></table>
+<-prevnextout>
+<+numsplit>.<-numsplit>
+<+markin><b><-markin>
+<+markout></b><-markout>
+<+prioout><img src="/img/star.gif" alt="" width="15" height="16"><-prioout>
+<+opts>mediadate typelink target topic totalpages link more mark<-opts>
+<-contentquery>
+
+<+contentquery:contentresults:de de_de de_at de_ch>
+<+limit>50<-limit>
+<+pre><p><h2>Websites:</h2><-pre>
+<+listin><ol start="#"><-listin>
+<+listout></ol>
+<-listout>
+<+elemin><li><-elemin>
+<+elemout>
+<-elemout>
+<+mediadatein>(<-mediadatein>
+<+mediadateout>)<-mediadateout>
+<+targetin><br><small><i>-- <-targetin>
+<+topicin> &nbsp; <-topicin>
+<+totalin> &nbsp; (<-totalin>
+<+totalout>)</i></small><br>&nbsp;
+<-totalout>
+<+prevnextdelim></b> &nbsp; &nbsp; <b><-prevnextdelim>
+<+prevnextin><table border="0" width="100%"><tr><td align="center" nowrap><b><-prevnextin>
+<+prevnextout></b></td></tr></table>
+<-prevnextout>
+<+numsplit>.<-numsplit>
+<+markin><b><-markin>
+<+markout></b><-markout>
+<+prioout><img src="/img/star.gif" alt="" width="15" height="16"><-prioout>
+<+opts>mediadate typelink target topic totalpages link more mark<-opts>
+<-contentquery>
+
+<+false:notfound><p><center><b>No matching entries found.</b></center><p><-false>
+
+<+false:notfound:de de_de de_at de_ch><p><center><b>Keine entsprechenden Eintr&auml;ge gefunden.</b></center><p><-false>
+
+<+catlink:catlink>
+<+pre><font size="-1"><-pre>
+<+post></font><-post>
+<+alt>&nbsp;<-alt>
+<-catlink>
+
+<+catlink:catlink:de de_de de_at de_ch>
+<+label>Kategorie<-label>
+<+pre><font size="-1"><-pre>
+<+post></font><-post>
+<+alt>&nbsp;<-alt>
+<-catlink>
+
+<+advanced:advancedform>
+<+pre><center><p><table border="0"><tr><td nowrap><-pre>
+<+post></td></tr></table></center><-post>
+<+width>30<-width>
+<+submitin>&nbsp;<-submitin>
+<+categoryin><br><-categoryin>
+<+modein><br><-modein>
+<+ktmin><br><-ktmin>
+<+opts>searchtype kidssearch<-opts>
+<-advanced>
+
+<+advanced:advancedform:de de_de de_at de_ch>
+<+pre><center><p><table border="0"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table></center><-post>
+<+width>30<-width>
+<+submitin>&nbsp;<-submitin>
+<+categoryin><br><-categoryin>
+<+modein><br><-modein>
+<+ktmin><br><-ktmin>
+<+opts>searchtype kidssearch<-opts>
+<+submit>Erweiterte Suche<-submit>
+<+category>Nur Ergebnisse in der folgenden Kategorie zeigen: <-category>
+<+categoryall>Alle Kategorien<-categoryall>
+<+modelabel>Suche: <-modelabel>
+<+modecategories> Nur Kategorien<-modecategories>
+<+modesites> Nur Websites<-modesites>
+<+modeboth> Kategorien und Websites<-modeboth>
+<+ktmlabel>Seiten f&uuml;r Kinder und Jugendliche: <-ktmlabel>
+<+ktmkids> Kinder<-ktmkids>
+<+ktmteens> Jugendliche<-ktmteens>
+<+ktmmteens> &auml;ltere Jugendliche<-ktmmteens>
+<-advanced>
+
+<+engines:extsearch>
+<+pre><hr><center><small><-pre>
+<+post></small></center><hr><-post>
+<-engines>
+
+<+engines:extsearch:de de_de de_at de_ch>
+<+pre><hr><center><small><-pre>
+<+post></small></center><hr><-post>
+<+label>Suche mit: <-label>
+<-engines>
+
+<+description:description>
+<+pre><hr><-pre>
+<+post><hr>
+<-post>
+<+alt><p>No description available.
+<hr>
+<-alt>
+<-description>
+
+<+title:doctitle>
+<+pre> - <-pre>
+<+delim>: <-delim>
+<+opts>titleonly striptop<-opts>
+<-title>
+
+<+searchform:stdform>
+<+pre><table border="0" width="100%"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table><-post>
+<+width>30<-width>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<small><-selectin>
+<+selectout></small><-selectout>
+<+opts>where<-opts>
+<-searchform>
+
+<+searchform:homeform>
+<+pre><table border="0" width="100%"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table>
+<-post>
+<+width>30<-width>
+<+submitin>&nbsp;<-submitin>
+<+advanced><small><em>advanced</em></small><-advanced>
+<+advancedin>&nbsp;<-advancedin>
+<+opts>advanced<-opts>
+<-searchform>
+
+<+searchform:homeform:de de_de de_at de_ch>
+<+pre><table border="0" width="100%"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table>
+<-post>
+<+width>30<-width>
+<+submit>Suche<-submit>
+<+submitin>&nbsp;<-submitin>
+<+advanced><small><em>erweitert</em></small><-advanced>
+<+advancedin>&nbsp;<-advancedin>
+<+opts>advanced<-opts>
+<-searchform>
+
+<+searchform:resultsform>
+<+pre><table border="0" width="100%"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table><-post>
+<+width>30<-width>
+<+submit>New Search<-submit>
+<+submitin>&nbsp;<-submitin>
+<+advanced>Advanced&nbsp;Search<-advanced>
+<+advancedin>&nbsp;&nbsp;&nbsp;<-advancedin>
+<+opts>advanced<-opts>
+<-searchform>
+
+<+searchform:resultsform:de de_de de_at de_ch>
+<+pre><table border="0" width="100%"><tr><td nowrap align="center"><-pre>
+<+post></td></tr></table><-post>
+<+width>30<-width>
+<+submit>Neue Suche<-submit>
+<+submitin>&nbsp;<-submitin>
+<+advanced>Erweiterte&nbsp;Suche<-advanced>
+<+advancedin>&nbsp;&nbsp;&nbsp;<-advancedin>
+<+opts>advanced<-opts>
+<-searchform>
+
+<+history:stdhistory>
+<+pre><td><font size="+1"><b><-pre>
+<+post></b></font></td><-post>
+<+alt><td><font size="+1">&nbsp;</font></td><-alt>
+<-history>
+
+<+history:infohistory>
+<+pre><td><font size="+1"><b><-pre>
+<+post></b></font></td><-post>
+<+alt><td><font size="+1">&nbsp;</font></td><-alt>
+<+opts>linkself<-opts>
+<-history>
+
+<+pages:topcount>
+<+pre><center><font color="#777777" size="-1">Total of <-pre>
+<+post> sites, <-post>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+pages:topcount:de de_de de_at de_ch>
+<+pre><center><font color="#777777" size="-1">Insgesamt <-pre>
+<+post> Websites und <-post>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+topics:topcount>
+<+post> categories</font></center><-post>
+<+numsplit>.<-numsplit>
+<-topics>
+
+<+topics:topcount:de de_de de_at de_ch>
+<+post> Kategorien</font></center><-post>
+<+numsplit>.<-numsplit>
+<-topics>
+
+<+pages:totalcount>
+<+pre><td align="left"><i>(<-pre>
+<+post>)</i></td><-post>
+<+alt><td align="left">&nbsp;</td><-alt>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+desclink:desclink>
+<+pre><td nowrap align="right"><b><-pre>
+<+post></b></td><-post>
+<+alt><td nowrap align="right"><b>&nbsp;</b></td><-alt>
+<-desclink>
+
+<+letterbar:letterbar>
+<+pre><table border="0" align="center"><tr><td nowrap>[ <-pre>
+<+post> ]</td></tr></table>
+<hr><-post>
+<+letterin><b><-letterin>
+<+letterout></b><-letterout>
+<+alt><hr>
+<-alt>
+<-letterbar>
+
+<+narsym:narrow>
+<+levelin><p><table border="0"><tr><td nowrap valign="top"><ul>
+<-levelin>
+<+levelout></ul></td></tr></table>
+<hr><-levelout>
+<+delim></ul></td>
+<td nowrap valign="top"><ul><-delim>
+<+elemin><li><b><-elemin>
+<+elemout></b><-elemout>
+<+symbolic></b>@<b><-symbolic>
+<+totalin>&nbsp;<i>(<-totalin>
+<+totalout>)</i>
+<-totalout>
+<+numsplit>.<-numsplit>
+<+2columns>6<-2columns>
+<+3columns>24<-3columns>
+<+opts>totalpages linksymbol<-opts>
+<-narsym>
+
+<+related:related>
+<+labelin><p><-labelin>
+<+pre><p><table border="0"><tr><td nowrap valign="top"><ul>
+<-pre>
+<+post></ul></td></tr></table>
+<hr><-post>
+<+elemin><li><b><-elemin>
+<+elemout></b><-elemout>
+<+totalin>&nbsp;<i>(<-totalin>
+<+totalout>)</i>
+<-totalout>
+<+numsplit>.<-numsplit>
+<+opts>totalpages<-opts>
+<-related>
+
+<+otherlang:languages>
+<+labelin><p><-labelin>
+<+pre><table border="0"><tr><td nowrap valign="top"><ul>
+<-pre>
+<+post></ul></td></tr></table>
+<hr><-post>
+<+delim></ul></td>
+<td nowrap valign="top"><ul><-delim>
+<+elemin><li><-elemin>
+<+totalin>&nbsp;<i>(<-totalin>
+<+totalout>)</i>
+<-totalout>
+<+numsplit>.<-numsplit>
+<+2columns>6<-2columns>
+<+3columns>24<-3columns>
+<+4columns>42<-4columns>
+<+opts>totalpages hsort<-opts>
+<-otherlang>
+
+<+content:externallinks>
+<+pre><p><table border="0"><tr><td><ul>
+<-pre>
+<+post></ul></td></tr></table>
+<hr><-post>
+<+elemin><li><-elemin>
+<+elemout>
+<-elemout>
+<+mediadatein>(<-mediadatein>
+<+mediadateout>)
+<-mediadateout>
+<+prioin><b><-prioin>
+<+prioout></b><img src="/img/star.gif" alt="" width="15" height="16"><-prioout>
+<+opts>typelink mediadate<-opts>
+<-content>
+
+<+newsgroup:news>
+<+pre><p><table border="0"><tr><td nowrap valign="top"><ul>
+<-pre>
+<+post></ul></td></tr></table>
+<hr><-post>
+<+rowin><li>Usenet <-rowin>
+<+elemout><small><-elemout>
+<+rowout></small><-rowout>
+<+delim></small> - <small><-delim>
+<+opts>news<-opts>
+<-newsgroup>
+
+<+searchinfo:extsearchstart>
+<+pre><ul><li><-pre>
+<+post></ul><-post>
+<+alt>&nbsp;<-alt>
+<-searchinfo>
+
+<+searchinfo:qryextsearchstart>
+<+pre><ul><li><-pre>
+<+post></ul><-post>
+<+alt>&nbsp;<-alt>
+<-searchinfo>
+
+<+searchinfo:qryextsearchstart:de de_de de_at de_ch>
+<+pre><ul><li><-pre>
+<+post></ul><-post>
+<+searchforin>Suche "<b><-searchforin>
+<+searchforout></b>" mit:<-searchforout>
+<+alt>&nbsp;<-alt>
+<-searchinfo>
+
+<+externalsearch:extsearch>
+<+pre><font size="-1"><-pre>
+<+post></font><-post>
+<-externalsearch>
+
+<+editor:editors>
+<+pre><table border="0" align="center"><tr><td><-pre>
+<+post></td></tr></table><-post>
+<+opts>prelabel<-opts>
+<-editor>
+
+<+lastupdate:timestamp>
+<+pre><center><font color="#777777" size="-1"><-pre>
+<+post></font></center><-post>
+<+alt>&nbsp;<-alt>
+<+opts>prelabel<-opts>
+<-lastupdate>
+
+<+termsofuse:legal>
+<+pre><center><font size="-1"><-pre>
+<+post></font></center><-post>
+<-termsofuse>
+
+<+termsofuse:toplegal>
+<+label>Terms of Use<-label>
+<+pre><center><font size="-1"><-pre>
+<+post></font></center><-post>
+<-termsofuse>
+
+<+termsofuse:toplegal:de de_de de_at de_ch>
+<+label>Nutzungsbedingungen<-label>
+<+pre><center><font size="-1"><-pre>
+<+post></font></center><-post>
+<-termsofuse>
+
+<+catalogpage>
+<@var:pagestart>
+<@var:pretitle><@title:doctitle><@var:bodystart>
+<@searchform:stdform>
+<@var:hist1><@history:stdhistory><@var:hist2><@pages:totalcount><@var:hist3><@desclink:desclink><@var:hist4>
+<@letterbar:letterbar>
+<@narsym:narrow>
+<@related:related>
+<@otherlang:languages>
+<@content:externallinks>
+<@newsgroup:news>
+<@var:extsearch1><@searchinfo:extsearchstart><@var:extsearch2><@externalsearch:extsearch><@var:extsearch3>
+<@editor:editors>
+<@lastupdate:timestamp>
+<@var:bodytail>
+<@termsofuse:legal>
+<@var:pageend>
+<-catalogpage>
+
+<+indexpage>
+<@var:pagestart>
+<@var:pretitle><@title:doctitle><@var:bodystart>
+<@searchform:stdform>
+<@var:hist1><@history:infohistory><@var:hist2><@pages:totalcount><@var:hist3><@desclink:desclink><@var:hist4>
+<@letterbar:letterbar>
+<@narsym:narrow>
+<@related:related>
+<@otherlang:languages>
+<@content:externallinks>
+<@newsgroup:news>
+<@editor:editors>
+<@lastupdate:timestamp>
+<@var:bodytail>
+<@termsofuse:legal>
+<@var:pageend>
+<-indexpage>
+
+<+homepage>
+<@var:pagestart>
+<@var:pretitle><@title:doctitle><@var:bodystart>
+<@searchform:homeform>
+<@var:welcome>
+<@pages:topcount><@topics:topcount>
+<@var:bodytail>
+<@termsofuse:toplegal>
+<@var:pageend>
+<-homepage>
+
+<+infopage>
+<@var:pagestart>
+<@var:pretitle><@title:doctitle><@var:bodystart>
+<@searchform:stdform>
+<@var:hist1><@history:infohistory><@var:hist2><@pages:totalcount><@var:hist3><@desclink:desclink><@var:hist4>
+<@description:description>
+<@editor:editors>
+<@lastupdate:timestamp>
+<@var:bodytail>
+<@termsofuse:legal>
+<@var:pageend>
+<-infopage>
+
+<+advancedpage>
+<@var:pagestart>
+<@var:pretitle><@var:advancedtitle><@var:bodystart>
+<@var:advancedstart>
+<@advanced:advancedform><@engines:extsearch>
+<@var:bodytail>
+<@termsofuse:toplegal>
+<@var:pageend>
+<-advancedpage>
+
+<+querypage>
+<@var:pagestart>
+<@var:pretitle><@var:resultstitle><@var:bodystart>
+<@var:catlink1><@catlink:catlink><@var:catlink2>
+<@clear>
+<@topicquery:topicresults>
+<@contentquery:contentresults>
+<@false:notfound>
+<@searchform:resultsform>
+<@var:catlink1><@catlink:catlink><@var:catlink2>
+<@var:extsearch1><@searchinfo:qryextsearchstart><@var:extsearch2><@externalsearch:extsearch><@var:extsearch3>
+<@var:bodytail>
+<@termsofuse:toplegal>
+<@var:pageend>
+<-querypage>
+
+<+robotspage>User-agent: *
+Disallow: /
+<-robotspage>

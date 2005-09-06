@@ -1,0 +1,1370 @@
+#
+# Stylesheet based Minimoz example
+# (c) 2004 Andreas Steinmetz, ast@domdv.de
+#
+*******************************************************************************
+#
+# web based news servers
+#
+<+webnews>
+<+label>Google Groups<-label>
+<+pre>http://groups.google.com/groups?group=<-pre>
+<+post><-post>
+<-webnews>
+#
+# web based search engines
+#
+<+searchengine>
+<+label>All&nbsp;the&nbsp;Web<-label>
+<+pre>http://www.alltheweb.com/search?type=all&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.alltheweb.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>AltaVista<-label>
+<+pre>http://www.altavista.com/cgi-bin/query?q=<-pre>
+<+post><-post>
+<+home>http://www.altavista.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Google&nbsp;USENET<-label>
+<+pre>http://groups.google.com/groups?q=<-pre>
+<+post><-post>
+<+home>http://groups.google.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Google<-label>
+<+pre>http://www.google.com/search?num=10&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.google.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>HotBot<-label>
+<+pre>http://hotbot.lycos.com/?MT=<-pre>
+<+post>&amp;SM=MC&amp;DV=0&amp;LG=any&amp;DC=10&amp;DE=2<-post>
+<+home>http://www.hotbot.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Lycos<-label>
+<+pre>http://search.lycos.com/?lpv=1&amp;loc=searchhp&amp;query=<-pre>
+<+post><-post>
+<+home>http://www.lycos.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Teoma<-label>
+<+pre>http://s.teoma.com/search?q=<-pre>
+<+post><-post>
+<+home>http://www.teoma.com/<-home>
+<-searchengine>
+
+<+searchengine>
+<+label>Yahoo<-label>
+<+pre>http://search.yahoo.com/bin/search?p=<-pre>
+<+post><-post>
+<+home>http://www.yahoo.com/<-home>
+<-searchengine>
+
+*******************************************************************************
+                                   Images
+*******************************************************************************
+
+############################
+## nls independent images ##
+############################
+
+<+gifimg:diamondred>
+<+file>diamondred.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:diamondblue>
+<+file>diamondblue.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:diamondgreen>
+<+file>diamondgreen.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:diamondorange>
+<+file>diamondorange.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:diamondpurple>
+<+file>diamondpurple.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:diamondgrey>
+<+file>diamondgrey.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+<+gifimg:minimoz>
+<+file>minimoz.gif<-file>
+<+width>10<-width>
+<+height>10<-height>
+<-gifimg>
+
+##########################
+## nls dependent images ##
+##########################
+
+<+gifimg:glasses>
+<+file>glasses.gif<-file>
+<+width>26<-width>
+<+height>11<-height>
+<+alt>priority<-alt>
+<-gifimg>
+
+<+gifimg:glasses:de de_de de_at de_ch>
+<+file>glasses.gif<-file>
+<+width>26<-width>
+<+height>11<-height>
+<+alt>priority<-alt>
+<-gifimg>
+
+<+gifimg:leftarrow>
+<+file>leftarrow.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>previous<-alt>
+<-gifimg>
+
+<+gifimg:leftarrow:de de_de de_at de_ch>
+<+file>leftarrow.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>previous<-alt>
+<-gifimg>
+
+<+gifimg:rightarrow>
+<+file>rightarrow.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>next<-alt>
+<-gifimg>
+
+<+gifimg:rightarrow:de de_de de_at de_ch>
+<+file>rightarrow.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>next<-alt>
+<-gifimg>
+
+<+gifimg:book>
+<+file>book.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>description<-alt>
+<-gifimg>
+
+<+gifimg:book:de de_de de_at de_ch>
+<+file>book.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>description<-alt>
+<-gifimg>
+
+<+gifimg:borderbook>
+<+file>book.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>description<-alt>
+<+style>borderimg<-style>
+<-gifimg>
+
+<+gifimg:borderbook:de de_de de_at de_ch>
+<+file>book.gif<-file>
+<+width>32<-width>
+<+height>32<-height>
+<+alt>description<-alt>
+<+style>borderimg<-style>
+<-gifimg>
+
+*******************************************************************************
+                                Page Elements
+*******************************************************************************
+
+<+title:title>
+<+pre>minimoz - <-pre>
+<+alt>minimoz<-alt>
+<+opts>striptop titleonly<-opts>
+<-title>
+
+<+letterbar:letterbar>
+<+style>fat<-style>
+<+delim><-delim>
+<+pre><td class="smallcol" valign="top"><div class="letterbar"><table border="0"><-pre>
+<+post></table></div></td><td class="smallcol">&nbsp;</td><-post>
+<+rowin><tr><td class="letterbar" align="center"><-rowin>
+<+rowout></td></tr><-rowout>
+<-letterbar>
+
+<+desclink:desclink>
+<+label><img src="/img/book.gif" class="info" alt="description" width="32" height="32"/><-label>
+<-desclink>
+
+<+desclink:desclink:de de_de de_at de_ch>
+<+label><img src="/img/book.gif" class="info" alt="Beschreibung" width="32" height="32"/><-label>
+<-desclink>
+
+<+history:catalog>
+<+pre><span class="history"><-pre>
+<+post></span><-post>
+<+delim></span><span class="smallarrow"> &raquo; </span><span class="history"><-delim>
+<-history>
+
+<+history:infopage>
+<+pre><span class="history"><-pre>
+<+post></span><-post>
+<+delim></span><span class="smallarrow"> &raquo; </span><span class="history"><-delim>
+<+opts>linkself<-opts>
+<-history>
+
+<+topics:history>
+<+alt>-<-alt>
+<+numsplit>.<-numsplit>
+<-topics>
+
+<+pages:history>
+<+alt>-<-alt>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+pages:topcount>
+<+pre><span class="gray">Total of <-pre>
+<+post> sites, <-post>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+pages:topcount:de de_de de_at de_ch>
+<+pre><span class="gray">Insgesamt <-pre>
+<+post> Websites und <-post>
+<+numsplit>.<-numsplit>
+<-pages>
+
+<+topics:topcount>
+<+post> categories</span><-post>
+<+numsplit>.<-numsplit>
+<-topics>
+
+<+topics:topcount:de de_de de_at de_ch>
+<+post> Kategorien</span><-post>
+<+numsplit>.<-numsplit>
+<-topics>
+
+<+searchform:standard>
+<+pre><div class="stdform"><-pre>
+<+post></div><-post>
+<+inputin><p><-inputin>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+selectout></p><-selectout>
+<+opts>where<-opts>
+<-searchform>
+
+<+searchform:index>
+<+pre><div class="stdform"><-pre>
+<+post></div><-post>
+<+inputin><p><-inputin>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+selectout></p><-selectout>
+<+opts>global<-opts>
+<-searchform>
+
+<+searchform:query>
+<+pre><div class="stdform"><-pre>
+<+post></div><-post>
+<+inputin><p><-inputin>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+submit>New Search<-submit>
+<+selectall>in the entire directory<-selectall>
+<+selectonlyin>only in <-selectonlyin>
+<+selectout></p><-selectout>
+<+opts>global<-opts>
+<-searchform>
+
+<+searchform:query:de de_de de_at de_ch>
+<+pre><div class="stdform"><-pre>
+<+post></div><-post>
+<+inputin><p><-inputin>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+submit>Neue Suche<-submit>
+<+selectall>im gesamten Verzeichnis<-selectall>
+<+selectonlyin>nur in <-selectonlyin>
+<+selectout></p><-selectout>
+<+opts>global<-opts>
+<-searchform>
+
+<+searchform:home>
+<+pre><div class="stdform"><-pre>
+<+post></div><-post>
+<+inputin><p><-inputin>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+submit>Search<-submit>
+<+selectall>in the entire directory<-selectall>
+<+selectonlyin>only in <-selectonlyin>
+<+selectout></p><-selectout>
+<+opts>global<-opts>
+<-searchform>
+
+<+searchform:home:de de_de de_at de_ch>
+<+pre><div class="stdform"><p><-pre>
+<+post></p></div><-post>
+<+submitin>&nbsp;<-submitin>
+<+selectin>&nbsp;<-selectin>
+<+submit>Suche<-submit>
+<+selectall>im gesamten Verzeichnis<-selectall>
+<+selectonlyin>nur in <-selectonlyin>
+<+opts>global<-opts>
+<-searchform>
+
+<+narsym:catalog>
+<+pre><hr class="thin"/>
+<-pre>
+<+levelin><table border="0"><tr><-levelin>
+<+levelout></tr></table><-levelout>
+<+colin><td valign="top"><table border="0"><-colin>
+<+colout></table></td><-colout>
+<+rowin><tr><td><img src="/img/diamondred.gif" alt="" class="itemlist" width="10" height="10"/> <-rowin>
+<+rowout></td></tr>
+<-rowout>
+<+symbolic><span class="smallarrow">&raquo;</span><-symbolic>
+<+style>itemlist<-style>
+<+2columns>6<-2columns>
+<+3columns>12<-3columns>
+<+numsplit>.<-numsplit>
+<+totaldelim>/<-totaldelim>
+<+totalin> <span class="count">[<-totalin>
+<+totalout>]</span><-totalout>
+<+opts>symbollink merge totaltopics totalpages<-opts>
+<-narsym>
+
+<+related:catalog>
+<+labelin><hr class="thin"/>
+<p class="itemlist"><-labelin>
+<+labelout></p><-labelout>
+<+pre><table border="0"><tr><td><table border="0"><-pre>
+<+post></table></td></tr></table><-post>
+<+rowin><tr><td><img src="/img/diamondblue.gif" alt="" class="itemlist" width="10" height="10"/> <-rowin>
+<+rowout></td></tr>
+<-rowout>
+<+delim><span class="smallarrow"> &raquo; </span><-delim>
+<+style>itemlist<-style>
+<+numsplit>.<-numsplit>
+<+totaldelim>/<-totaldelim>
+<+totalin> <span class="count">[<-totalin>
+<+totalout>]</span><-totalout>
+<+opts>totaltopics totalpages<-opts>
+<-related>
+
+<+otherlang:catalog>
+<+labelin><p class="itemlist"><-labelin>
+<+labelout></p><-labelout>
+<+pre><table border="0"><tr><-pre>
+<+post></tr></table><hr class="thin"/><-post>
+<+colin><td valign="top"><table border="0"><-colin>
+<+colout></table></td><-colout>
+<+rowin><tr><td><img src="/img/diamondgreen.gif" alt="" class="itemlist" width="10" height="10"/> <-rowin>
+<+rowout></td></tr>
+<-rowout>
+<+2columns>6<-2columns>
+<+3columns>12<-3columns>
+<+4columns>18<-4columns>
+<+5columns>24<-5columns>
+<+style>itemlist<-style>
+<+numsplit>.<-numsplit>
+<+totaldelim>/<-totaldelim>
+<+totalin> <span class="count">[<-totalin>
+<+totalout>]</span><-totalout>
+<+opts>totaltopics totalpages<-opts>
+<-otherlang>
+
+<+content:catalog>
+<+pre><div class="content"><table border="0" width="100%"><-pre>
+<+post></table></div><-post>
+<+rowin><tr><-rowin>
+<+rowout></tr>
+<-rowout>
+<+oddin><td class="content1"><table border="0"><tr><td class="col10px"><img src="/img/diamondorange.gif" alt="" class="itemlist" width="10" height="10"/></td><td><-oddin>
+<+oddout></td></tr></table></td><-oddout>
+<+evenin><td class="content2"><table border="0"><tr><td class="col10px"><img src="/img/diamondorange.gif" alt="" class="itemlist" width="10" height="10"/></td><td><-evenin>
+<+evenout></td></tr></table></td><-evenout>
+<+prioin><b><-prioin>
+<+prioout></b><img class="prio" alt="priority" src="/img/glasses.gif" width="26" height="11"/><-prioout>
+<-content>
+
+<+content:catalog:de de_de de_at de_ch>
+<+pre><div class="content"><table border="0" width="100%"><-pre>
+<+post></table></div><-post>
+<+rowin><tr><-rowin>
+<+rowout></tr>
+<-rowout>
+<+oddin><td class="content1"><table border="0"><tr><td class="col10px"><img src="/img/diamondorange.gif" alt="" class="itemlist" width="10" height="10"/></td><td><-oddin>
+<+oddout></td></tr></table></td><-oddout>
+<+evenin><td class="content2"><table border="0"><tr><td class="col10px"><img src="/img/diamondorange.gif" alt="" class="itemlist" width="10" height="10"/></td><td><-evenin>
+<+evenout></td></tr></table></td><-evenout>
+<+prioin><b><-prioin>
+<+prioout></b><img class="prio" alt="Priorit&auml;t" src="/img/glasses.gif" width="26" height="11"/><-prioout>
+<-content>
+
+<+newsgroup:catalog>
+<+style>itemlist<-style>
+<+pre><p class="itemlist"><span class="itemlist">Usenet:</span></p><table border="0"><tr><td><table border="0"><-pre>
+<+post></table></td></tr></table><hr class="thin"/><-post>
+<+rowin><tr><td><img src="/img/diamondpurple.gif" alt="" class="itemlist" width="10" height="10"/><-rowin>
+<+rowout></td></tr>
+<-rowout>
+<+elemin><span class="itemlist"> <-elemin>
+<+elemout></span><-elemout>
+<+delim></td><td>&nbsp;</td><td><-delim>
+<+opts>news<-opts>
+<-newsgroup>
+
+<+searchinfo:catalog>
+<+pre><img src="/img/diamondgrey.gif" alt="" class="itemlist" width="10" height="10"/><span class="extquery"> <-pre>
+<+post></span><-post>
+<+alt>&nbsp;<-alt>
+<-searchinfo>
+
+<+searchinfo:query>
+<+pre><img src="/img/diamondgrey.gif" alt="" class="itemlist" width="10" height="10"/><span class="extquery"> <-pre>
+<+post></span><-post>
+<+alt>&nbsp;<-alt>
+<+searchforin>"<b><-searchforin>
+<+searchforout></b>" search on:<-searchforout>
+<-searchinfo>
+
+<+searchinfo:query:de de_de de_at de_ch>
+<+pre><span class="extquery"> <-pre>
+<+post></span><-post>
+<+alt>&nbsp;<-alt>
+<+searchforin>Suche "<b><-searchforin>
+<+searchforout></b>" mit:<-searchforout>
+<-searchinfo>
+
+<+externalsearch:catalog>
+<+style>extsearch<-style>
+<+delim> <span class="extsearch">::</span> <-delim>
+<-externalsearch>
+
+<+editor:catalog>
+<+pre><table border="0" width="100%"><tr><td class="footer"><-pre>
+<+post></td></tr></table><-post>
+<+opts>prelabel<-opts>
+<-editor>
+
+<+lastupdate:catalog>
+<+pre><table border="0" width="100%"><tr><td class="footer"><-pre>
+<+post></td></tr></table><-post>
+<+alt>&nbsp;<-alt>
+<+opts>prelabel<-opts>
+<-lastupdate>
+
+<+termsofuse:catalog>
+<+pre><table border="0" width="100%"><tr><td class="footer"><-pre>
+<+post></td></tr></table><-post>
+<-termsofuse>
+
+<+true:ruler><hr class="thin"/><-true>
+
+<+false:ruler><hr class="thin"/><-false>
+
+<+depfalse:ruler><hr class="thin"/><-depfalse>
+
+<+description:infopage>
+<+h1in><h1 class="infoh1"><-h1in>
+<+h1out>:</h1><-h1out>
+<+h2in><h2 class="infoh2"><-h2in>
+<+h2out>:</h2><-h2out>
+<+delim><hr class="thin"/><-delim>
+<+alt><p>Description currently not available.</p>
+<hr class="thin"/>
+<-alt>
+<-description>
+
+<+description:infopage:de de_de de_at de_ch>
+<+h1in><h1 class="infoh1"><-h1in>
+<+h1out>:</h1><-h1out>
+<+h2in><h2 class="infoh2"><-h2in>
+<+h2out>:</h2><-h2out>
+<+delim><hr class="thin"/><-delim>
+<+alt><p>Die Beschreibung ist derzeit nicht verf&uuml;gbar.</p>
+<hr class="thin"/>
+<-alt>
+<-description>
+
+<+topicquery:topics>
+<+delim><span class="smallarrow"> &raquo; </span><-delim>
+<+listin><div class="results"><table border="0" width="100%"><-listin>
+<+listout></table></div><-listout>
+<+rowin><tr><-rowin>
+<+oddin><td class="topic1"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><span class="topic"><-oddin>
+<+evenin><td class="topic2"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><span class="topic"><-evenin>
+<+rowout></span></td></tr></table></td></tr>
+<-rowout>
+<+morein><span class="topic"><-morein>
+<+moreout></span><-moreout>
+<+more>more...<-more>
+<+pre><p class="resulthdr">Categories:</p><-pre>
+<+markin><em><-markin>
+<+markout></em><-markout>
+<+totaldelim>/<-totaldelim>
+<+totalin> &nbsp; </span><span class="topicctr">[<-totalin>
+<+totalout>]<-totalout>
+<+opts>more mark totaltopics totalpages link<-opts>
+<-topicquery>
+
+<+topicquery:topics:de de_de de_at de_ch>
+<+delim><span class="smallarrow"> &raquo; </span><-delim>
+<+listin><div class="results"><table border="0" width="100%"><-listin>
+<+listout></table></div><-listout>
+<+rowin><tr><-rowin>
+<+oddin><td class="topic1"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><span class="topic"><-oddin>
+<+evenin><td class="topic2"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><span class="topic"><-evenin>
+<+rowout></span></td></tr></table></td></tr>
+<-rowout>
+<+morein><span class="topic"><-morein>
+<+moreout></span><-moreout>
+<+more>mehr...<-more>
+<+pre><p class="resulthdr">Kategorien:</p><-pre>
+<+markin><em><-markin>
+<+markout></em><-markout>
+<+totaldelim>/<-totaldelim>
+<+totalin> &nbsp; </span><span class="topicctr">[<-totalin>
+<+totalout>]<-totalout>
+<+opts>more mark totaltopics totalpages link<-opts>
+<-topicquery>
+
+<+contentquery:content>
+<+topicdelim><span class="smallarrow"> &raquo; </span><-topicdelim>
+<+pre><p class="resulthdr">Web Sites:</p><-pre>
+<+listin><div class="results"><table border="0" width="100%"><-listin>
+<+listout></table></div><-listout>
+<+rowin><tr><-rowin>
+<+oddin><td class="content1"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><-oddin>
+<+evenin><td class="content2"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><-evenin>
+<+rowout></td></tr></table></td></tr>
+<-rowout>
+<+markin><b><-markin>
+<+markout></b><-markout>
+<+prioout><img class="prio" alt="priority" src="/img/glasses.gif" width="26" height="11"/><-prioout>
+<+mediadatein> (<-mediadatein>
+<+mediadateout>)<-mediadateout>
+<+targetin><br class="search"/><span class="addtlinfo"><-targetin>
+<+targetout></span><-targetout>
+<+topicin><br class="search"/><span class="addtlinfo"><-topicin>
+<+topicout></span><-topicout>
+<+totaldelim>/<-totaldelim>
+<+totalin> &nbsp; <span class="addtlctr">[<-totalin>
+<+totalout>]</span><-totalout>
+<+opts>more mark mediadate target topic totaltopics totalpages link linkonly<-opts>
+<+prev><img class="prevnext" alt="previous" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="previous" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="previous" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="previous" src="/img/leftarrow.gif" width="32" height="32"/><-prev>
+<+next><img class="prevnext" alt="next" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="next" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="next" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="next" src="/img/rightarrow.gif" width="32" height="32"/><-next>
+<+prevnextdelim></b> &nbsp; &nbsp; &nbsp; &nbsp; <b><-prevnextdelim>
+<+prevnextin><br /><div class="prevnext"><-prevnextin>
+<+prevnextout></div>
+<-prevnextout>
+<-contentquery>
+
+<+contentquery:content:de de_de de_at de_ch>
+<+topicdelim><span class="smallarrow"> &raquo; </span><-topicdelim>
+<+pre><p class="resulthdr">Websites:</p><-pre>
+<+listin><div class="results"><table border="0" width="100%"><-listin>
+<+listout></table></div><-listout>
+<+rowin><tr><-rowin>
+<+oddin><td class="content1"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><-oddin>
+<+evenin><td class="content2"><table border="0"><tr><td class="search"><span class="search">#.</span></td><td><-evenin>
+<+rowout></td></tr></table></td></tr>
+<-rowout>
+<+markin><b><-markin>
+<+markout></b><-markout>
+<+prioout><img class="prio" alt="Priorit&auml;t" src="/img/glasses.gif" width="26" height="11"/><-prioout>
+<+mediadatein> (<-mediadatein>
+<+mediadateout>)<-mediadateout>
+<+targetin><br class="search"/><span class="addtlinfo"><-targetin>
+<+targetout></span><-targetout>
+<+topicin><br class="search"/><span class="addtlinfo"><-topicin>
+<+topicout></span><-topicout>
+<+totaldelim>/<-totaldelim>
+<+totalin> &nbsp; <span class="addtlctr">[<-totalin>
+<+totalout>]</span><-totalout>
+<+opts>more mark mediadate target topic totaltopics totalpages link linkonly<-opts>
+<+prev><img class="prevnext" alt="vorherige" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="vorherige" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="vorherige" src="/img/leftarrow.gif" width="32" height="32"/><img class="prevnext" alt="vorherige" src="/img/leftarrow.gif" width="32" height="32"/><-prev>
+<+next><img class="prevnext" alt="n&auml;chste" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="n&auml;chste" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="n&auml;chste" src="/img/rightarrow.gif" width="32" height="32"/><img class="prevnext" alt="n&auml;chste" src="/img/rightarrow.gif" width="32" height="32"/><-next>
+<+prevnextdelim></b> &nbsp; &nbsp; &nbsp; &nbsp; <b><-prevnextdelim>
+<+prevnextin><br /><div class="prevnext"><-prevnextin>
+<+prevnextout></div>
+<-prevnextout>
+<-contentquery>
+
+<+catlink:query>
+<+label>Category<-label>
+<-catlink>
+
+<+catlink:query:de de_de de_at de_ch>
+<+label>Kategorie<-label>
+<-catlink>
+
+<+var:termsofuse>Terms of Use<-var>
+<+var:termsofuse:de de_de de_at de_ch>Nutzungshinweise<-var>
+
+<+false:notfound><p class="notfound">No matching entries found.</p><hr class="thin"/><-false>
+<+false:notfound:de de_de de_at de_ch><p class="notfound">Keine entsprechenden Eintr&auml;ge gefunden.</p><hr class="thin"/><-false>
+
+<+var:welcome>
+<!-- start of css version of dmoz.org homepage -->
+<table cellspacing="4" cellpadding="4" class="welcome"><tr><td valign="top">
+
+<b><a href="/Arts/">Arts</a></b><br />
+<span class="welcome">
+<a href="/Arts/Movies/">Movies</a>,
+<a href="/Arts/Television/">Television</a>,
+<a href="/Arts/Music/">Music</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Business/">Business</a></b><br />
+<span class="welcome">
+<a href="/Business/Employment/">Jobs</a>,
+<a href="/Business/Real_Estate/">Real Estate</a>,
+<a href="/Business/Investing/">Investing</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Computers/">Computers</a></b><br />
+<span class="welcome">
+<a href="/Computers/Internet/">Internet</a>,
+<a href="/Computers/Software/">Software</a>,
+<a href="/Computers/Hardware/">Hardware</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/Games/">Games</a></b><br />
+<span class="welcome">
+<a href="/Games/Video_Games/">Video Games</a>,
+<a href="/Games/Roleplaying/">RPGs</a>,
+<a href="/Games/Gambling/">Gambling</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Health/">Health</a></b><br />
+<span class="welcome">
+<a href="/Health/Fitness/">Fitness</a>,
+<a href="/Health/Medicine/">Medicine</a>,
+<a href="/Health/Alternative/">Alternative</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Home/">Home</a></b><br />
+<span class="welcome">
+<a href="/Home/Family/">Family</a>,
+<a href="/Home/Consumer_Information/">Consumers</a>,
+<a href="/Home/Cooking/">Cooking</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/Kids_and_Teens/"><span class="red">K</span><span class="blue">i</span><span class="darkorange">d</span><span class="dodgerblue">s</span> and Teens</a></b><br />
+<span class="welcome">
+<a href="/Kids_and_Teens/Arts/">Arts</a>,
+<a href="/Kids_and_Teens/School_Time/">School Time</a>,
+<a href="/Kids_and_Teens/Teen_Life/">Teen Life</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/News/">News</a></b><br />
+<span class="welcome">
+<a href="/News/Media/">Media</a>,
+<a href="/News/Newspapers/">Newspapers</a>,
+<a href="/News/Weather/">Weather</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Recreation/">Recreation</a></b><br />
+<span class="welcome">
+<a href="/Recreation/Travel/">Travel</a>,
+<a href="/Recreation/Food/">Food</a>,
+<a href="/Recreation/Outdoors/">Outdoors</a>,
+<a href="/Recreation/Humor/">Humor</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/Reference/">Reference</a></b><br />
+<span class="welcome">
+<a href="/Reference/Maps/">Maps</a>,
+<a href="/Reference/Education/">Education</a>,
+<a href="/Reference/Libraries/">Libraries</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Regional/">Regional</a></b><br />
+<span class="welcome">
+<a href="/Regional/North_America/United_States/">US</a>,
+<a href="/Regional/North_America/Canada/">Canada</a>,
+<a href="/Regional/Europe/United_Kingdom/">UK</a>,
+<a href="/Regional/Europe/">Europe</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Science/">Science</a></b><br />
+<span class="welcome">
+<a href="/Science/Biology/">Biology</a>,
+<a href="/Science/Social_Sciences/Psychology/">Psychology</a>,
+<a href="/Science/Physics/">Physics</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/Shopping/">Shopping</a></b><br />
+<span class="welcome">
+<a href="/Shopping/Vehicles/Autos/">Autos</a>,
+<a href="/Shopping/Clothing/">Clothing</a>,
+<a href="/Shopping/Gifts/">Gifts</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Society/">Society</a></b><br />
+<span class="welcome">
+<a href="/Society/People/">People</a>,
+<a href="/Society/Religion_and_Spirituality/">Religion</a>,
+<a href="/Society/Issues/">Issues</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Sports/">Sports</a></b><br />
+<span class="welcome">
+<a href="/Sports/Baseball/">Baseball</a>,
+<a href="/Sports/Soccer/">Soccer</a>,
+<a href="/Sports/Basketball/">Basketball</a>...
+</span>
+
+</td></tr>
+
+<tr><td colspan="3" valign="top">
+<b><a href="/World/">World</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/">Deutsch</a>,
+<a href="/World/Espa%c3%b1ol/">Español</a>,
+<a href="/World/Fran%c3%a7ais/">Français</a>,
+<a href="/World/Italiano/">Italiano</a>,
+<a href="/World/Japanese/">Japanese</a>,
+<a href="/World/Nederlands/">Nederlands</a>,
+<a href="/World/Polska/">Polska</a>,
+<a href="/World/Dansk/">Dansk</a>,
+<a href="/World/Svenska/">Svenska</a>...
+</span>
+
+</td></tr></table>
+<!-- end of css version of dmoz.org homepage -->
+<-var>
+
+<+var:welcome:de de_de de_at de_ch>
+<!-- start of css version of german dmoz.org homepage by ast@domdv.de -->
+<table cellspacing="4" cellpadding="4" class="welcome"><tr><td valign="top">
+
+<b><a href="/World/Deutsch/Computer/">Computer</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Computer/Internet/">Internet</a>,
+<a href="/World/Deutsch/Computer/Software/">Software</a>,
+<a href="/World/Deutsch/Computer/Hardware/">Hardware</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Freizeit/">Freizeit</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Freizeit/Reisen/">Reisen</a>,
+<a href="/World/Deutsch/Freizeit/Essen_und_Trinken/">Essen und Trinken</a>,
+<a href="/World/Deutsch/Freizeit/Humor/">Humor</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Gesellschaft/">Gesellschaft</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Gesellschaft/Menschen/">Menschen</a>,
+<a href="/World/Deutsch/Gesellschaft/Religion_und_Spiritualit%c3%a4t/">Religion</a>,
+<a href="/World/Deutsch/Gesellschaft/Themen/">Themen</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/World/Deutsch/Gesundheit/">Gesundheit</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Gesundheit/Fitness/">Fitness</a>,
+<a href="/World/Deutsch/Gesundheit/Medizin/">Medizin</a>,
+<a href="/World/Deutsch/Gesundheit/Alternative_Medizin/">Alternative Medizin</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/Kids_and_Teens/International/Deutsch/"><span class="red">K</span><span class="blue">i</span><span class="darkorange">n</span><span class="dodgerblue">d</span><span class="seagreen">e</span><span class="purple">r</span> und Jugendliche</a></b><br />
+<span class="welcome">
+<a href="/Kids_and_Teens/International/Deutsch/Kultur/">Kultur</a>,
+<a href="/Kids_and_Teens/International/Deutsch/Schulzeit/">Schulzeit</a>,
+<a href="/Kids_and_Teens/International/Deutsch/Teens/">Teenager</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Kultur/">Kultur</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Kultur/Film/">Film</a>,
+<a href="/World/Deutsch/Medien/Fernsehen/">Fernsehen</a>,
+<a href="/World/Deutsch/Kultur/Musik/">Musik</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/World/Deutsch/Medien/">Medien</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Medien/Aktuelle_Nachrichten/">Nachrichten</a>,
+<a href="/World/Deutsch/Regional/Europa/Deutschland/Nachrichten_und_Medien/Zeitungen/">Zeitungen</a>,
+<a href="/World/Deutsch/Medien/Aktuelle_Nachrichten/Wetter/">Wetter</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Online-Shops/">Online-Shops</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Online-Shops/Fahrzeuge/Autos/">Autos</a>,
+<a href="/World/Deutsch/Online-Shops/Bekleidung/">Bekleidung</a>,
+<a href="/World/Deutsch/Online-Shops/Geschenke/">Geschenke</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Regional/">Regional</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Regional/Europa/Deutschland/">Deutschland</a>,
+<a href="/World/Deutsch/Regional/Europa/">Europa</a>,
+<a href="/World/Deutsch/Regional/Amerika/">Amerika</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/World/Deutsch/Spiele/">Spiele</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Spiele/Computerspiele/">Computerspiele</a>,
+<a href="/World/Deutsch/Spiele/Rollenspiele/">Rollenspiele</a>,
+<a href="/World/Deutsch/Spiele/Gl%c3%bccksspiel/">Gl&uuml;cksspiel</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Sport/">Sport</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Sport/Ballsport/Fu%c3%9fball/">Fu&szlig;ball</a>,
+<a href="/World/Deutsch/Sport/Motorsport/Automobil/Formel_1/">Formel 1</a>,
+<a href="/World/Deutsch/Sport/Verb%c3%a4nde/">Verb&auml;nde</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Wirtschaft/">Wirtschaft</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Wirtschaft/Besch%c3%a4ftigung/">Besch&auml;figung</a>,
+<a href="/World/Deutsch/Wirtschaft/Immobilien/">Immobilien</a>,
+<a href="/World/Deutsch/Wirtschaft/Kapitalanlage/">Kapitalanlage</a>...
+</span>
+
+</td></tr><tr><td valign="top">
+<b><a href="/World/Deutsch/Wissen/">Wissen</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Wissen/Karten_und_Pl%c3%a4ne/">Karten und Pl&auml;ne</a>,
+<a href="/World/Deutsch/Wissen/Bildung/">Bildung</a>,
+<a href="/World/Deutsch/Wissen/Bibliotheken/">Bibliotheken</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Wissenschaft/">Wissenschaft</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Wissenschaft/Naturwissenschaften/Biologie/">Biologie</a>,
+<a href="/World/Deutsch/Wissenschaft/Psychologie/">Psychologie</a>,
+<a href="/World/Deutsch/Wissenschaft/Naturwissenschaften/Physik/">Physik</a>...
+</span>
+
+</td><td valign="top">
+<b><a href="/World/Deutsch/Zuhause/">Zuhause</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/Gesellschaft/Familie/">Familie</a>,
+<a href="/World/Deutsch/Zuhause/Verbraucherinformationen/">Verbraucherinformationen</a>,
+<a href="/World/Deutsch/Zuhause/Kochen/">Kochen</a>...
+</span>
+
+</td></tr>
+
+<tr><td colspan="3" valign="top">
+<b><a href="/World/">Welt</a></b><br />
+<span class="welcome">
+<a href="/World/Deutsch/">Deutsch</a>,
+<a href="/index.html">English</a>,
+<a href="/World/Fran%c3%a7ais/">Français</a>,
+<a href="/World/Italiano/">Italiano</a>,
+<a href="/World/Espa%c3%b1ol/">Español</a>,
+<a href="/World/Nederlands/">Nederlands</a>,
+<a href="/World/Dansk/">Dansk</a>,
+<a href="/World/Svenska/">Svenska</a>,
+<a href="/World/Polska/">Polska</a>,
+<a href="/World/Japanese/">Japanese</a>...
+</span>
+
+</td></tr></table>
+<!-- end of css version of german dmoz.org homepage by ast@domdv.de -->
+<-var>
+
+<+var:results>Search Results<-var>
+
+<+var:results:de de_de de_at de_ch>Suchergebnisse<-var>
+
+*******************************************************************************
+                                    Pages
+*******************************************************************************
+
+##############
+## Homepage ##
+##############
+
+<+homepage>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>minimoz</title>
+<@csslink>
+</head>
+<body><table width="100%" border="0"><tr>
+<td class="widecol" align="left" valign="top">
+<hr class="thin"/><@searchform:home><hr class="thin"/>
+<@var:welcome>
+<div class="footer"><table border="0" width="100%"><tr><td class="footer"><@pages:topcount><@topics:topcount></td></tr><tr><td class="footer"><a href="http://dmoz.org/termsofuse.html"><@var:termsofuse></a></td></tr></table></div>
+</td>
+</tr></table></body>
+</html>
+<-homepage>
+
+###########
+## Index ##
+###########
+
+<+indexpage>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title><@title:title></title>
+<@csslink>
+</head>
+<body><table width="100%" border="0"><tr>
+<@letterbar:letterbar>
+<td class="widecol" align="left" valign="top">
+<@desclink:desclink> <@history:infopage> &nbsp; <span class="histcount">[<@topics:history>/<@pages:history>]</span><hr class="thin"/><@searchform:index>
+<@clear><@narsym:catalog>
+<@related:catalog><@false:ruler>
+<@depclear><@content:catalog><@depfalse:ruler>
+<@newsgroup:catalog>
+<@otherlang:catalog>
+<div class="footer"><@editor:catalog><@lastupdate:catalog><@termsofuse:catalog></div>
+</td>
+</tr></table></body>
+</html>
+<-indexpage>
+
+#############
+## Catalog ##
+#############
+
+<+catalogpage>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title><@title:title></title>
+<@csslink>
+</head>
+<body><table width="100%" border="0"><tr>
+<@letterbar:letterbar>
+<td class="widecol" align="left" valign="top">
+<@desclink:desclink> <@history:catalog> &nbsp; <span class="histcount">[<@topics:history>/<@pages:history>]</span><hr class="thin"/><@searchform:standard>
+<@clear><@narsym:catalog>
+<@related:catalog><@false:ruler>
+<@depclear><@content:catalog><@depfalse:ruler>
+<@newsgroup:catalog>
+<@otherlang:catalog>
+<table border="0"><tr><td><table border="0"><tr><td class="nowrap"><@searchinfo:catalog> <@externalsearch:catalog></td></tr></table></td></tr></table>
+<div class="footer"><@editor:catalog><@lastupdate:catalog><@termsofuse:catalog></div>
+</td>
+</tr></table></body>
+</html>
+<-catalogpage>
+
+##################
+## Descriptions ##
+##################
+
+<+infopage>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title><@title:title></title>
+<@csslink>
+</head>
+<body><table width="100%" border="0"><tr>
+<td class="widecol" align="left" valign="top">
+<@gifimg:borderbook> <@history:infopage><hr class="thin"/><@searchform:standard><hr class="thin"/>
+<div class="infobox"><div class="infotext"><@description:infopage></div></div>
+<div class="footer"><@editor:catalog><@lastupdate:catalog><@termsofuse:catalog></div>
+</td>
+</tr></table></body>
+</html>
+<-infopage>
+
+####################
+## Search Results ##
+####################
+
+<+querypage>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>minimoz - <@var:results></title>
+<@csslink>
+</head>
+<body><table width="100%" border="0"><tr>
+<td class="widecol" align="left" valign="top">
+<table border="0" width="100%"><tr><td align="left" class="searchtop"><@catlink:query></td><td align="right" class="searchtop"><a href="/">Home</a></td></tr></table>
+<hr class="thin"/><@searchform:query><hr class="thin"/>
+<@clear>
+<@topicquery:topics>
+<@contentquery:content>
+<@false:notfound>
+<table border="0" width="100%"><tr><td align="center" class="nowrap"><@searchinfo:query> <@externalsearch:catalog></td></tr></table>
+<div class="footer"><table border="0" width="100%"><tr><td class="footer"><a href="http://dmoz.org/termsofuse.html"><@var:termsofuse></a></td></tr></table></div>
+</td>
+</tr></table></body>
+</html>
+<-querypage>
+
+*******************************************************************************
+                                   robots.txt
+*******************************************************************************
+
+<+robotspage>User-agent: *
+Disallow: /
+<-robotspage>
+
+*******************************************************************************
+                                   Stylesheet
+*******************************************************************************
+
+<+csspage>
+/*
+minimoz css page by ast@domdv.de
+
+Note: I had &rArr; with an alignment of text-top in place which looks
+beautiful in mozilla. A certain Redmond company browser isn't able to
+display this simple entity. Sonow it is &raquo; and text-bottom. Grr.
+*/
+
+body
+{
+	font-family: verdana, arial, helvetica, sans-serif;
+	color: #191970; /* midnightblue */
+	background: #e6e6fa; /* lavender */
+}
+
+a:link { color: blue; text-decoration: none;}
+a:visited { color: blue; text-decoration: none;}
+a:active { color: blue; text-decoration: underline;}
+a:hover { color: red; text-decoration: underline;}
+
+/* this is for the 'oh so cute' IE which isn't able to use the above... */
+
+a:link img { border-color: blue; }
+a:visited img { border-color: blue; }
+a:active img { border-color: blue; }
+a:hover img { border-color: red; }
+
+a.fat { font-weight: bold;}
+
+br.search
+{
+	display: block;
+	clear: both;
+	line-height: 0px;
+	font-size: 0px;
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+	border: none;
+}
+
+td.letterbar
+{
+	font-size: 12px;
+	background: white;
+	padding: 0px;
+}
+
+div.letterbar
+{
+	border: 1px solid;
+	float: left;
+}
+
+span.history
+{
+	font-size: 14px;
+	font-weight: bold;
+	vertical-align: bottom;
+}
+
+span.smallarrow
+{
+	font-size: small;
+	font-weight: bold;
+	vertical-align: bottom;
+}
+
+span.histcount
+{
+	color: #a9a9a9; /* darkgray */
+	font-size: 14px;
+	font-weight: bold;
+	vertical-align: bottom;
+}
+
+span.count
+{
+	color: #a9a9a9; /* darkgray */
+	font-size: 10px;
+}
+
+hr.thin
+{
+	border: 0px;
+	color: black;
+	background-color: black;
+	height: 1px;
+}
+
+img.info
+{
+	border-width: 1px;
+	vertical-align: bottom;
+}
+
+img.prevnext
+{
+	border-width: 0px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+div.stdform
+{
+	text-align: center;
+	background-color: #b0c4de; /* lightsteelblue */
+	background-image: url(/img/minimoz.gif);
+	background-repeat: repeat;
+	border: 1px solid;
+}
+
+img.itemlist
+{
+	border-width: 0px;
+	vertical-align: baseline;
+}
+
+p.itemlist
+{
+	margin-top: 9px;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+.itemlist
+{
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+
+div.content
+{
+	margin-top: 6px;
+	background-color: white;
+	border: 1px solid;
+	font-size: 12px;
+}
+
+td.content1 { background-color: #afeeee; } /* paleturquoise */
+td.content2 { background-color: #b0e0e6; } /* powderblue */
+
+.extsearch
+{
+	font-size: 10px;
+	font-weight: bold;
+}
+
+span.extquery { font-size: 10px; }
+
+div.footer
+{
+	margin-top: 6px;
+	background-color: #b0c4de; /* lightsteelblue */
+	border: 1px solid;
+}
+
+td.footer
+{
+	font-size: 10px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+td.nowrap { white-space: nowrap; }
+
+div.infobox
+{
+	background-color: #dcdcdc; /* gainsboro */
+	border: 1px solid;
+}
+
+div.infotext
+{
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	font-size: 12px;
+}
+
+h1.infoh1
+{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+h2.infoh2
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+img.borderimg
+{
+	border: 1px solid;
+	vertical-align: bottom;
+}
+
+div.results
+{
+	font-size: 12px;
+	border: 1px solid;
+	background: #f5f5f5; /* whitesmoke */
+}
+
+span.topic
+{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+td.topic1 { background-color: #d3d3d3; } /* lightgrey */
+td.topic2 { background-color: #dcdcdc; } /* gainsboro */
+
+p.resulthdr
+{
+	font-size: 14px;
+	font-weight: bold;
+}
+
+span.addtlinfo
+{
+	font-size: 9px;
+	color: gray;
+	line-height: 12px;
+}
+
+span.addtlctr
+{
+	font-size: 9px;
+	color: blue;
+}
+
+span.topicctr
+{
+	font-size: 12px;
+	color: blue;
+}
+
+td.smallcol { width: 0%; }
+td.widecol { width: 100%; }
+td.col10px { width: 10px; }
+
+td.search
+{
+	width: 40px;
+	text-align: right;
+}
+
+/*
+damn IE misformats font sizes (reduces the size for links) so the 11px
+below should be actually 12px. This is a compromise, send IE to hell
+where it belongs... - I love Mozilla!
+*/
+
+span.search
+{
+	font-size: 11px;
+	margin-right: 8px;
+}
+
+img.prio { vertical-align: baseline; }
+
+div.prevnext
+{
+	background-color: #b0c4de; /* lightsteelblue */
+	border: 1px solid;
+	text-align: center;
+	white-space: nowrap;
+}
+
+td.searchtop
+{
+	font-size: 9px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+}
+
+p.notfound
+{
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	white-space: nowrap;
+}
+
+table.welcome
+{
+	font-size: 12px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+span.welcome { font-size: 9px; }
+
+span.red { color: red; }
+span.blue { color: blue }
+span.darkorange { color: #ff8c00 }
+span.dodgerblue { color: #1e90ff }
+span.seagreen { color: #2e8b57 }
+span.purple { color: purple }
+span.gray { color: gray }
+<-csspage>

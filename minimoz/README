@@ -1,0 +1,71 @@
+General documentation is found in the doc directory.
+
+Some words about the databases available for instant use with this code:
+
+1. SQLite 3 - an embedded database, works well for the purposes of this code.
+   It is, however, quite demanding on file handles when put under load.
+   This means you will have to use 'ulimit -n' to increase the total amount of
+   of open files allowed.
+
+2. MySQL - 4.0.x works well, 4.1.x up and including to 4.1.7 has a
+   nasty memory leak that is being worked on, otherwise it works well.
+   It seems the memory leak was fixed somewhen between 4.1.7 and 4.1.13
+   so if you want to use MySQL 4.1 be sure to use MySQL 4.1.13 or later.
+   The embedded version of MySQL is not recommended until user defined
+   functions can be used which is currently not the case.
+   One more problem with MySQL is that you can't use INNODB tables.
+   MySQL crashes during index creation of large indexes for INNODB. This
+   is, however, no real problem, as MyISAM tables work well.
+
+3. PostgreSQL - 7.4.x is slow and resource consuming. It eats disk space,
+   thus not recommended for this code. There seem to be problems with prepared
+   statements that make e.g. a prepared statement executes a mere 40 times
+   slower compared to direct statement execution. The problem is reported
+   but except for a pointer to a TODO item there is seemingly no activity
+   to solve the slowness.
+
+To give some values on performance:
+
+Load test using the following command (replace 'hades:99' with your system)
+which executes 11000 requests total from 10 parallel clients:
+
+./loadmoz -a -c 10 -r 100 \
+'http://hades:99/search.cgi?catid=1072&search=billy+joel&all=yes' \
+'http://hades:99/Arts/Music/' \
+'http://hades:99/Arts/Music/Bands_and_Artists/' \
+'http://hades:99/Arts/Music/Bands_and_Artists/A/' \
+'http://hades:99/search.cgi?search=billy+joel&catid=2' \
+'http://hades:99/search.cgi?search=linux&catid=3' \
+'http://hades:99/search.cgi?search=linux&all=no&start=40&catid=1' \
+'http://hades:99/World/Deutsch/Medien/Aktuelle_Nachrichten/' \
+'http://hades:99/World/Deutsch/Regional/Europa/Deutschland/Bayern/' \
+'http://hades:99/World/Deutsch/Regional/Europa/Deutschland/Bayern/desc.html' \
+'http://hades:99/World/Deutsch/Kultur/Musik/'
+
+The results of this load test are given below. Note that the system running
+the server side is at constant 100% cpu load during the test so the time
+stated is clearly quite slower than the measurement for a single request
+on an otherwise idle system. The time given is the average time required per
+single request during the load test:
+
+			Pool of 10 Connections		Connection per Request
+
+SQLite 3		0.3284s				0.3716s
+MySQL 4.0		0.4422s				0.4598s
+MySQL 4.1		0.4780s				0.5301s
+PostgreSQL 7.4		0.6371s				0.8883s
+
+The following table shows the final disk usage for the database:
+
+SQLite 3		3.8GB
+MySQL 4.0		3.3GB
+MySQL 4.1		3.4GB
+PostgreSQL 7.4		7.8GB
+
+The following table shows the database build time:
+
+SQLite 3		 37m18.625s
+MySQL 4.0		 45m20.386s
+MySQL 4.1		 46m32.325s
+PostgreSQL 7.4		114m23.894s
+

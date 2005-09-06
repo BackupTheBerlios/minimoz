@@ -1,0 +1,4878 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>minimoz Templates</title>
+  <meta content="Andreas Steinmetz, ast@domdv.de" name="author">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#000099" link="#000099" vlink="#990099">
+<h1>Minimoz Templates</h1>
+<p>The general concept consists of <a href="#Building_Blocks">building
+blocks</a> and <a href="#Pages">pages</a>. A
+building block is a functional element which is included in a page.
+Each building block can be defined multiple times for different client
+nls environments to support <a href="#NLS_Support">content selection</a>
+depending on the clients
+nls preferences. Note that no building block or page can exceed 8192
+bytes in length in the template file, which, however, should never be
+any problem at all (there is always the <a href="#var">var</a>
+building block if long page content is required).<br>
+</p>
+<hr style="width: 100%; height: 2px;">
+<p></p>
+<h2><a name="Building_Blocks"></a>Building Blocks</h2>
+Any building block has the following form:<br>
+<br>
+<span style="font-weight: bold;">&lt;+</span><span
+ style="color: rgb(51, 102, 255);">bbspecifier</span><span
+ style="font-weight: bold;">:</span><span
+ style="color: rgb(51, 102, 255);"><a name="building_block_name"></a>name</span>[<span
+ style="font-weight: bold;">:</span><span
+ style="color: rgb(51, 102, 255);">nlslist</span>]<span
+ style="font-weight: bold;">&gt;</span><span
+ style="font-style: italic; color: rgb(51, 102, 255);">bbdata</span><span
+ style="font-weight: bold;">&lt;-</span><span
+ style="color: rgb(51, 102, 255);">bbspecifier</span><span
+ style="font-weight: bold;">&gt;</span><br>
+<br>
+<ul>
+  <li><span style="font-style: italic;"><a name="bbspecifier"></a>bbspecifier</span>:
+the
+specifier that actually states the kind of building block defined here.
+See below for the types of building blocks available. Note that the <a
+ href="#clear"><span style="font-style: italic;">clear</span></a>, <a
+ href="#depclear"><span style="font-style: italic;">depclear</span></a>,
+    <a href="#save"><span style="font-style: italic;">save</span></a>, <a
+ href="#restore"><span style="font-style: italic;">restore</span></a>
+and <a href="#csslink"><span style="font-style: italic;">csslink</span></a>
+building blocks cannot be
+defined.<br>
+  </li>
+  <li><span style="font-style: italic;"><a name="name"></a>name</span>:
+the name of this
+building block. The name needs not to be unique as the same building
+block may be defined more than once with different nls contents. Note
+that the <a href="#webnews"><span style="font-style: italic;">webnews</span></a>
+and <a href="#searchengine"><span style="font-style: italic;">searchengine</span></a>
+building blocks cannot
+have a name or a nlslist specifier.<br>
+  </li>
+  <li><span style="font-style: italic;"><a name="nlslist"></a>nlslist</span>:
+an optional
+blank separated list of <a href="#NLS_Support">nls support</a>
+identifiers for which this building block
+is valid, <a name="nlsexamples"></a>e.g. "en en_us de de_de".</li>
+  <li><span style="font-style: italic;">bbdata</span>: the data
+associated with this building block. This is, depending on the type of
+the building block, either an immediate data string or one or more
+options which are specified as: <span style="font-weight: bold;">&lt;+</span><span
+ style="color: rgb(51, 102, 255);">option</span><span
+ style="font-weight: bold;">&gt;</span><span
+ style="font-style: italic; color: rgb(51, 102, 255);">optiondata</span><span
+ style="font-weight: bold;">&lt;-</span><span
+ style="color: rgb(51, 102, 255);">option</span><span
+ style="font-weight: bold;">&gt;</span> where <span
+ style="font-style: italic;">option</span> is the option identifier and
+    <span style="font-style: italic;">optiondata</span> is the data
+string associated with the option. The option <a name="opts"></a><span
+ style="font-style: italic;">opts</span> always contains a blank
+separated list of options for the building block.</li>
+</ul>
+<h3><a name="Building_Block_Overview"></a>Building Block Overview</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Building Block<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#C">C</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#I">I</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#A">A</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#Q">Q</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#S">S</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#R">R</a><br>
+      </th>
+      <th style="text-align: center; vertical-align: top;"><a href="#E">E</a><br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#title">title</a> </td>
+      <td style="vertical-align: top;">the html document title </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#history">history</a> </td>
+      <td style="vertical-align: top;">the category list from Top to
+the current category as
+hyperlinks </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#topics">topics</a> </td>
+      <td style="vertical-align: top;">the total count of categories
+below the current category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#pages">pages</a> </td>
+      <td style="vertical-align: top;">the total count of external
+pages below the current category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#desclink">desclink</a>
+      </td>
+      <td style="vertical-align: top;">hyperlink to the category
+description </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#description">description</a>
+      </td>
+      <td style="vertical-align: top;">the category description </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#letterbar">letterbar</a>
+      </td>
+      <td style="vertical-align: top;">hyperlinks to deeper categories
+by grouped number
+and/or letter </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#narsym">narsym</a> </td>
+      <td style="vertical-align: top;">output all narrowing and
+symbolic hyperlinks of a category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#related">related</a> </td>
+      <td style="vertical-align: top;">output all related hyperlinks of
+a category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#otherlang">otherlang</a>
+      </td>
+      <td style="vertical-align: top;">output all hyperlinks to the
+same category in other
+languages </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#content">content</a> </td>
+      <td style="vertical-align: top;">output all external pages of a
+category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#newsgroup">newsgroup</a>
+      </td>
+      <td style="vertical-align: top;">output hyperlinks to newsgroups
+related to a category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#searchinfo">searchinfo</a>
+      </td>
+      <td style="vertical-align: top;">output intro string for search
+with external search
+engines </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#externalsearch">externalsearch</a>
+      </td>
+      <td style="vertical-align: top;">output search hyperlinks for
+external search
+engines </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#editor">editor</a> </td>
+      <td style="vertical-align: top;">output category editor hyperlinks
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#lastupdate">lastupdate</a>
+      </td>
+      <td style="vertical-align: top;">output last update of category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#termsofuse">termsofuse</a>
+      </td>
+      <td style="vertical-align: top;">output terms of use hyperlink </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#searchform">searchform</a>
+      </td>
+      <td style="vertical-align: top;">output standard search form </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#advanced">advanced</a>
+      </td>
+      <td style="vertical-align: top;">output advanced search form </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#engines">engines</a> </td>
+      <td style="vertical-align: top;">output hyperlinks to external
+search engines </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#catlink">catlink</a> </td>
+      <td style="vertical-align: top;">output hyperlink to referenced
+category </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#topicquery">topicquery</a>
+      </td>
+      <td style="vertical-align: top;">output result of category query </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#contentquery">contentquery</a>
+      </td>
+      <td style="vertical-align: top;">output result of external pages
+query </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#gifimg">gifimg</a> </td>
+      <td style="vertical-align: top;">output hyperlink to gif <a
+ href="#Additional_Information_about_Images">image</a> </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#jpgimg">jpgimg</a> </td>
+      <td style="vertical-align: top;">output hyperlink to jpeg <a
+ href="#Additional_Information_about_Images">image</a> </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#pngimg">pngimg</a> </td>
+      <td style="vertical-align: top;">output hyperlink to png <a
+ href="#Additional_Information_about_Images">image</a> </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#redirect">redirect</a>
+      </td>
+      <td style="vertical-align: top;">output hyperlink to redirection
+target </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#o">o</a><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#webnews">webnews</a> </td>
+      <td style="vertical-align: top;">define http based usenet
+interface </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#searchengine">searchengine</a>
+      </td>
+      <td style="vertical-align: top;">define external search engine </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#var">var</a></td>
+      <td style="vertical-align: top;">output defined data</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#true">true</a></td>
+      <td style="vertical-align: top;">output defined data if output
+flag is true</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#false">false</a></td>
+      <td style="vertical-align: top;">output defined data if output
+flag is false</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#deptrue">deptrue</a></td>
+      <td style="vertical-align: top;">output defined data if output
+flag is true and dependent
+output flag is true</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#depfalse">depfalse</a></td>
+      <td style="vertical-align: top;">output defined data if output
+flag is true and dependent
+output flag is false</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#clear">clear</a></td>
+      <td style="vertical-align: top;">clear output flag value</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#depclear">depclear</a></td>
+      <td style="vertical-align: top;">clear dependent output flag value</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#save">save</a></td>
+      <td style="vertical-align: top;">save output flag values</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#restore">restore</a></td>
+      <td style="vertical-align: top;">restore output flag values</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#csslink">csslink</a></td>
+      <td style="vertical-align: top;">insert&nbsp; link to css&nbsp;
+page&nbsp; if css page is
+defined</td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><a href="#x">x</a><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+      <td style="vertical-align: top; text-align: center;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+The final columns of the above table describes the validity of a
+building block for the available <a href="#Pages">page</a> types:<br>
+<ul>
+  <li><span style="font-weight: bold;"><a name="C"></a>C</span>&nbsp;
+-&nbsp; <a href="#catalogpage">catalog</a> page including <a
+ href="#homepage">home</a> and <a href="#indexpage">index</a> page</li>
+  <li><span style="font-weight: bold;"><a name="I"></a>I</span>&nbsp;&nbsp;&nbsp;
+-&nbsp; <a href="#infopage">info</a> page</li>
+  <li><span style="font-weight: bold;"><a name="A"></a>A</span>&nbsp;
+-&nbsp; <a href="#advancedpage">advanced</a> search page<br>
+  </li>
+  <li><span style="font-weight: bold;"><a name="Q"></a>Q</span>&nbsp;
+-&nbsp; <a href="#querypage">query</a> output page<br>
+  </li>
+  <li><span style="font-weight: bold;"><a name="S"></a>S</span>&nbsp;&nbsp;
+-&nbsp; <a href="#csspage">css</a> (cascading style sheet) page<br>
+  </li>
+  <li><span style="font-weight: bold;"><a name="R"></a>R</span>&nbsp;
+-&nbsp; <a href="#robotspage">robots</a> page<br>
+  </li>
+  <li><span style="font-weight: bold;"><a name="E"></a>E</span>&nbsp;
+-&nbsp; <a href="#err302page">error</a> page</li>
+</ul>
+An <a name="x"></a><span style="font-weight: bold;">x</span> means the
+building block can be used for the <a href="#Page_Names">page</a>
+type, <a name="o"></a><span style="font-weight: bold;">o</span> means
+that the building block can only be used for the http <a
+ href="#err302page">302</a> redirect page.<br>
+Below all available building blocks are described:<br>
+<h3><a name="title"></a><a href="#Building_Block_Overview">title</a> -
+the html document title<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+generated title string<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+generated title string<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter between the
+generated elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ' - '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if title string
+generation fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">titleonly - show only the
+category title instead of the full category path<br>
+striptop - strip the "Top" element from the category path<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="history"></a><a href="#Building_Block_Overview">history</a>
+- the category list from Top to the current category as
+hyperlinks<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+generated category list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+generated category list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter between the
+generated elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ': '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if category
+list generation fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">linkself - output the current
+category as a hyperlink instead of plain html<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="topics"></a><a href="#Building_Block_Overview">topics</a>
+- the total count of categories below the current category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+generated value<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+generated value<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if value
+generation fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group<br>
+      </td>
+      <td style="vertical-align: top;">default: no delimiter<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="pages"></a><a href="#Building_Block_Overview">pages</a> -
+the total count of external pages below the current category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+generated value<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+generated value<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if value
+generation fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group<br>
+      </td>
+      <td style="vertical-align: top;">default: no delimiter<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="desclink"></a><a href="#Building_Block_Overview">desclink</a>
+- hyperlink to the category description<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the text of the hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+generated hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+generated hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if no hyperlink
+is generated<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="description"></a><a href="#Building_Block_Overview">description</a>
+- the category description<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+category description<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+category description<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter between the
+description if the current category and the categories below the
+current
+category<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;hr&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if category
+description retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+h1 and h2 hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">h1in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+name of the current category<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;h1&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">h1out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the name
+of the current category<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;/h1&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">h2in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+name of a category below the current category<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;h2&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">h2out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the name
+of a category below the current category<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;/h2&gt;'<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="letterbar"></a><a href="#Building_Block_Overview">letterbar</a>
+- hyperlinks to deeper categories by grouped number
+and/or letter<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+letterbar<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+letterbar<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between the letterbar
+elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ' | '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there is no
+letterbar or letterbar retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">letterin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+current number/letter<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">letterout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+current number/letter<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row retrieved from the database<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+row retrieved from the database<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row retrieved from the database<br>
+      </td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row retrieved from the database<br>
+      </td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row from the database<br>
+      </td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row from the database<br>
+      </td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="narsym"></a><a href="#Building_Block_Overview">narsym</a>
+- output all narrowing and symbolic hyperlinks of a category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between the hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+links or link retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts<br>
+      </td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">symbolic<br>
+      </td>
+      <td style="vertical-align: top;">the symbol to be output for a
+symbolic link<br>
+      </td>
+      <td style="vertical-align: top;">default: '@'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">colin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of every column<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">colout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+every column<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col1in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 1<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col1out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 1<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col2in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 2<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col2out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 2<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col3in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 3<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col3out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 3<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col4in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 4<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col4out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 4<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">levelin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of every priority level<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">levelout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the end
+of every priority level<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level2in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of priority level 2<br>
+      </td>
+      <td style="vertical-align: top;">processed after levelin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level2out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+priority level 2<br>
+      </td>
+      <td style="vertical-align: top;">processed before levelout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level1in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of priority level 1<br>
+      </td>
+      <td style="vertical-align: top;">processed after levelin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level1out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+priority level 1<br>
+      </td>
+      <td style="vertical-align: top;">processed before levelout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level0in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of priority level 0<br>
+      </td>
+      <td style="vertical-align: top;">processed after levelin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">level0out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+priority level 0<br>
+      </td>
+      <td style="vertical-align: top;">processed before levelout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">2columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into two columns<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">3columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into three columns<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">4columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into four columns<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total number of external pages below the
+current category<br>
+symbollink - for a symbolic link output first the symbolic link symbol
+and then the hyperlink<br>
+linksymbol - for a symbolic link output first the hyperlink and then
+the symbolic link symbol<br>
+hsort - sort output horizontally instead of vertically<br>
+merge - merge all priority levels into one level(level 0)<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="related"></a><a href="#Building_Block_Overview">related</a>
+- output all related hyperlinks of a category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the label describing the
+hyperlink type<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">data to be output between the
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+links or link retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">labelin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+label<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">labelout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the label<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts<br>
+      </td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total number of external pages below the
+current category<br>
+prelabel - output the 'pre' data before the label instead of label
+output and the 'pre' data output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="otherlang"></a><a href="#Building_Block_Overview">otherlang</a>
+- output all hyperlinks to the same category in other
+languages<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the label describing the
+hyperlink type </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">data to be output between the
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+links or link retrieval fails</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">labelin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+label</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">labelout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the label</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">colin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of every column</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">colout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+every column</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col1in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 1<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col1out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 1<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col2in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 2<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col2out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 2<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col3in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 3<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col3out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 3<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col4in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 4<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col4out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 4<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col5in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 5<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col5out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 5<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col6in<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the
+beginning of column 6<br>
+      </td>
+      <td style="vertical-align: top;">processed after colin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">col6out<br>
+      </td>
+      <td style="vertical-align: top;">data to be output at the end of
+column 6<br>
+      </td>
+      <td style="vertical-align: top;">processed before colout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">2columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into two columns</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">3columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into three columns</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">4columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into four columns</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">5columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into five columns</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6columns<br>
+      </td>
+      <td style="vertical-align: top;">the amount of database rows at
+which output is split into six columns</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total
+number of external pages below the current category<br>
+prelabel - output the 'pre' data before the label instead of label
+output and the 'pre' data output<br>
+hsort - sort horizontally instead of vertically<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="content"></a><a href="#Building_Block_Overview">content</a>
+- output all external pages of a category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+external pages output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+external pages output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between hyperlink and
+associated data<br>
+      </td>
+      <td style="vertical-align: top;">default: ' - '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+external pages or external page retrieval fails</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output</td>
+      <td style="vertical-align: top;">processed after prioin<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output</td>
+      <td style="vertical-align: top;">processed before prioout<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prioin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output as start of
+priority hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;b&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prioout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output as end of
+priority hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default '&lt;/b&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pdf<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a pdf document<br>
+      </td>
+      <td style="vertical-align: top;">default: '[pdf]'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rss<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a rss document</td>
+      <td style="vertical-align: top;">default: '[rss]'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">atom<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a atom document</td>
+      <td style="vertical-align: top;">default: '[atom]'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">mediadatein<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before media
+date output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">mediadateout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after media
+date output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">targetin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+external page address output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">targetout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after external
+page address output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicdelim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between category
+elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ': '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+category output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after category
+output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">mediadate - output media date if
+available<br>
+typelink - output document type, then document hyperlink<br>
+linktype - output document hyperlink, the document type<br>
+target - output document hyperlink as text<br>
+topic - output hyperlink category<br>
+totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total
+number of external pages below the current category<br>
+link - output topic/totaltopics/totalpages as hyperlinks instead of text<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="newsgroup"></a><a href="#Building_Block_Overview">newsgroup</a>
+- output hyperlinks to newsgroups related to a category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlinks output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlinks output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter output between the
+newsgroup elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ' - '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+newsgroups or newsgroup retrieval fails or if there are no http news
+servers defined and the 'news' option is not specified<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+newsgroup name<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+newsgroup name<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">news - output a 'news:' protocol
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="searchinfo"></a><a href="#Building_Block_Overview">searchinfo</a>
+- output intro string for search with external search
+engines<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before intro
+string output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after intro
+string output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if database
+retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">searchfor<br>
+      </td>
+      <td style="vertical-align: top;">the string that is to be
+searched for<br>
+      </td>
+      <td style="vertical-align: top;">default: system defined<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">searchforin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+search string<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">searchforout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+search string<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">wrap<br>
+      </td>
+      <td style="vertical-align: top;">amount of characters after which
+a forced line wrap occurs<br>
+      </td>
+      <td style="vertical-align: top;">default: 50<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="externalsearch"></a><a href="#Building_Block_Overview">externalsearch</a>
+- output search hyperlinks for external search
+engines<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+hyperlinks output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+hyperlinks output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between the hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;">default: ' '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output of there are no
+external search engines defined<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">searchfor<br>
+      </td>
+      <td style="vertical-align: top;">the query string<br>
+      </td>
+      <td style="vertical-align: top;">default: system defined<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="editor"></a><a href="#Building_Block_Overview">editor</a>
+- output category editor hyperlinks<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the category editor intro text<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+category editor hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+category editor hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">data to be output between the
+category editor hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;">default: ', '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there is no
+editor information or editor information retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">prelabel - output the 'pre' data
+before the label instead of label
+output and the 'pre' data output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="lastupdate"></a><a href="#Building_Block_Overview">lastupdate</a>
+- output last update of category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the last update intro text<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+last update information<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the last
+update information<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there is no
+last update information or last update information retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">prelabel - output the 'pre' data
+before the label instead of label
+output and the 'pre' data output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="termsofuse"></a><a href="#Building_Block_Overview">termsofuse</a>
+- output terms of use hyperlink<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the label of the terms of use
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+terms of use hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+terms of use hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlink</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="searchform"></a><a href="#Building_Block_Overview">searchform</a>
+- output standard search form<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before search
+form output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after search
+form output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlink</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">inputin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before text
+input field<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">inputout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after text
+input field<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submit<br>
+      </td>
+      <td style="vertical-align: top;">submit button text<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submitin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before submit
+button<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submitout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after submit
+button<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">selectall<br>
+      </td>
+      <td style="vertical-align: top;">global selection text<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">selectonlyin<br>
+      </td>
+      <td style="vertical-align: top;">single category selection intro
+text<br>
+      </td>
+      <td style="vertical-align: top;">default: string from database<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">selectin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+selection list output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">selectout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+selection list output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">advanced<br>
+      </td>
+      <td style="vertical-align: top;">label of advanced search page
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: 'advanced'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">advancedin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+advanced search page hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">advancedout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after advanced
+search page hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">width<br>
+      </td>
+      <td style="vertical-align: top;">input field width in characters<br>
+      </td>
+      <td style="vertical-align: top;">default: 30<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">where - output local category
+selection list if not in top category<br>
+advanced - output hyperlink to advanced search page<br>
+global - output top level category selection list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="advanced"></a><a href="#Building_Block_Overview">advanced</a>
+- output advanced search form<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before search
+form output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after search
+form output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">inputin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before text
+input field<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">inputout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after text
+input field<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submit<br>
+      </td>
+      <td style="vertical-align: top;">submit button label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Advanced Search'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submitin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before submit
+button<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">submitout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after submit
+button<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">category<br>
+      </td>
+      <td style="vertical-align: top;">search category label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Only show results in
+category: '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">categoryall<br>
+      </td>
+      <td style="vertical-align: top;">all categories label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'ALL'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">categoryin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+category selection list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">categoryout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after category
+selection list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modelabel<br>
+      </td>
+      <td style="vertical-align: top;">search mode selection label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Search: '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modecategories<br>
+      </td>
+      <td style="vertical-align: top;">category search mode selection
+label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Categories Only '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modesites<br>
+      </td>
+      <td style="vertical-align: top;">site search mode selection label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Sites Only '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modeboth<br>
+      </td>
+      <td style="vertical-align: top;">category and site mode selection
+label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Sites and Categories'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modein<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before search
+mode selection<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">modeout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after search
+mode selection<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmlabel<br>
+      </td>
+      <td style="vertical-align: top;">kids/teens/mature teens search
+selection label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Kids and Teens Sites: '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmkids<br>
+      </td>
+      <td style="vertical-align: top;">kids search selection label<br>
+      </td>
+      <td style="vertical-align: top;">default: ' Kids '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmteens<br>
+      </td>
+      <td style="vertical-align: top;">teens search selection label<br>
+      </td>
+      <td style="vertical-align: top;">default: ' Teens '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmmteens<br>
+      </td>
+      <td style="vertical-align: top;">mature teens search selection
+label<br>
+      </td>
+      <td style="vertical-align: top;">default: ' Mature Teens'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+kids/teens/mature teens search selection<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">ktmout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+kids/teens/mature teens search selection<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">width<br>
+      </td>
+      <td style="vertical-align: top;">search text input field width<br>
+      </td>
+      <td style="vertical-align: top;">default: 30<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">searchtype - enable output of
+category/site search type selection<br>
+kidssearch - enable output of kids/teens/mature teens search selection<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="engines"></a><a href="#Building_Block_Overview">engines</a>
+- output hyperlinks to external search engines<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">link list intro text<br>
+      </td>
+      <td style="vertical-align: top;">default: 'search on: '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before link
+list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after link list<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;">default: ' '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternative output if no
+external search engines are defined<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="catlink"></a><a href="#Building_Block_Overview">catlink</a>
+- output hyperlink to referenced category<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">the hyperlink label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'Category'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before the
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after the
+hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">data to be output if database
+retrieval fails<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlink</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="topicquery"></a><a href="#Building_Block_Overview">topicquery</a>
+- output result of category query<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+categories output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+categories output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between category
+elements<br>
+      </td>
+      <td style="vertical-align: top;">default: ': '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+categories found or external page retrieval fails</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">listin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before first
+result row<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">listout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after last
+result row<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts</td>
+      <td style="vertical-align: top;">default: none</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">more<br>
+      </td>
+      <td style="vertical-align: top;">label for more results hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: '&gt;&gt;&gt;&gt;&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">morein<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before more
+results hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">moreout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after more
+results hyperlink<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">markin<br>
+      </td>
+      <td style="vertical-align: top;">start of matching keyword marking<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">markout<br>
+      </td>
+      <td style="vertical-align: top;">end of matching keyword marking<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">limit<br>
+      </td>
+      <td style="vertical-align: top;">maximum amount of results to be
+output</td>
+      <td style="vertical-align: top;">default: 5<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total
+number of external pages below the current category<br>
+link - output topic/totaltopics/totalpages as hyperlinks instead of text<br>
+more - enable output of previous/next fields<br>
+mark - enable marking of search keywords in output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="contentquery"></a><a href="#Building_Block_Overview">contentquery</a>
+- output result of external pages query<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+external pages output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after external
+pages output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">delim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between hyperlink and
+associated data</td>
+      <td style="vertical-align: top;">default: ' - '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">alternate output if there are no
+external pages found or external page retrieval fails</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+hyperlinks</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">listin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before first
+result row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">listout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after last
+result row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+hyperlink output</td>
+      <td style="vertical-align: top;">processed after prioin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">elemout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+hyperlink output</td>
+      <td style="vertical-align: top;">processed before prioout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prioin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output as start of
+priority hyperlink</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prioout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output as end of
+priority hyperlink</td>
+      <td style="vertical-align: top;">default: none<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pdf<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a pdf document</td>
+      <td style="vertical-align: top;">default: '[pdf]'</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rss<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a rss document</td>
+      <td style="vertical-align: top;">default: '[rss]'</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">atom<br>
+      </td>
+      <td style="vertical-align: top;">data to be output in case of a
+hyperlink to a atom document</td>
+      <td style="vertical-align: top;">default: '[atom]'</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">mediadatein<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before media
+date output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">mediadateout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after media
+date output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">targetin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+external page address output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">targetout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+external page address output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicdelim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between category
+elements</td>
+      <td style="vertical-align: top;">default: ': '</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+category output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">topicout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+category output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totalout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after counts
+output</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">totaldelim<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter used between
+category and external page counts</td>
+      <td style="vertical-align: top;">default: none</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">numsplit<br>
+      </td>
+      <td style="vertical-align: top;">the delimiter inserted for
+better readability after every three digit group</td>
+      <td style="vertical-align: top;">default: none</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prev<br>
+      </td>
+      <td style="vertical-align: top;">label for previous page hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: '&lt;&lt;&lt;&lt;&lt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">next<br>
+      </td>
+      <td style="vertical-align: top;">label for next page hyperlink<br>
+      </td>
+      <td style="vertical-align: top;">default: '&gt;&gt;&gt;&gt;&gt;'<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prevnextdelim<br>
+      </td>
+      <td style="vertical-align: top;">delimiter between previous and
+next page hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;">default: ' &nbsp; &nbsp; '<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prevnextin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before
+previous/next hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">prevnextout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after
+previous/next hyperlinks<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">rowout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every row</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">oddout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+odd numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenin<br>
+      </td>
+      <td style="vertical-align: top;">data to be output before every
+even numbered row</td>
+      <td style="vertical-align: top;">processed after rowin</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">evenout<br>
+      </td>
+      <td style="vertical-align: top;">data to be output after every
+even numbered row</td>
+      <td style="vertical-align: top;">processed before rowout</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">markin<br>
+      </td>
+      <td style="vertical-align: top;">start of matching keyword marking</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">markout<br>
+      </td>
+      <td style="vertical-align: top;">end of matching keyword marking</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">limit<br>
+      </td>
+      <td style="vertical-align: top;">maximum amount of results to be
+output<br>
+      </td>
+      <td style="vertical-align: top;">default: 20<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#opts">opts</a><br>
+      </td>
+      <td style="vertical-align: top;">mediadate - output media date if
+available<br>
+typelink - output document type, then document hyperlink<br>
+linktype - output document hyperlink, the document type<br>
+target - output document hyperlink as text<br>
+topic - output hyperlink category<br>
+totaltopics - output the total
+number of categories below the current category<br>
+totalpages - output the total
+number of external pages below the current category<br>
+link - output topic/totaltopics/totalpages as hyperlinks instead of text<br>
+more - enable output of previous/next fields<br>
+linkonly - limit previous/next field output to available links<br>
+mark - enable marking of search keywords in output<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="gifimg"></a><a href="#Building_Block_Overview">gifimg</a>
+- output hyperlink to gif <a
+ href="#Additional_Information_about_Images">image</a><br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">file<br>
+      </td>
+      <td style="vertical-align: top;">image file pathname<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+image reference<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">contents of image alt tag<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">width<br>
+      </td>
+      <td style="vertical-align: top;">image width in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">height<br>
+      </td>
+      <td style="vertical-align: top;">image height in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="jpgimg"></a><a href="#Building_Block_Overview">jpgimg</a>
+- output hyperlink to jpeg <a
+ href="#Additional_Information_about_Images">image</a><br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">file<br>
+      </td>
+      <td style="vertical-align: top;">image file pathname<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+image reference</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">contents of image alt tag<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">width<br>
+      </td>
+      <td style="vertical-align: top;">image width in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">height<br>
+      </td>
+      <td style="vertical-align: top;">image height in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="pngimg"></a><a href="#Building_Block_Overview">pngimg</a>
+- output hyperlink to png <a
+ href="#Additional_Information_about_Images">image</a><br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">file<br>
+      </td>
+      <td style="vertical-align: top;">image file pathname<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">style<br>
+      </td>
+      <td style="vertical-align: top;">the class name for the generated
+image reference</td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">alt<br>
+      </td>
+      <td style="vertical-align: top;">contents of image alt tag<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">width<br>
+      </td>
+      <td style="vertical-align: top;">image width in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">height<br>
+      </td>
+      <td style="vertical-align: top;">image height in pixels<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="redirect"></a><a href="#Building_Block_Overview">redirect</a>
+- output hyperlink to redirection target<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">hyperlink label<br>
+      </td>
+      <td style="vertical-align: top;">default: 'here'<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="webnews"></a><a href="#Building_Block_Overview">webnews</a>
+- define http based usenet interface<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">hyperlink label<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">url part before query string<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">url part after query string<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="searchengine"></a><a href="#Building_Block_Overview">searchengine</a>
+- define external search engine<br>
+</h3>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Option<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+      <th style="vertical-align: top;">Remarks<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">label<br>
+      </td>
+      <td style="vertical-align: top;">hyperlink label<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">pre<br>
+      </td>
+      <td style="vertical-align: top;">url part before query string<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">post<br>
+      </td>
+      <td style="vertical-align: top;">url part after query string<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">home<br>
+      </td>
+      <td style="vertical-align: top;">search engine home page url<br>
+      </td>
+      <td style="vertical-align: top;">required<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h3><a name="var"></a><a href="#Building_Block_Overview">var</a> -
+output defined data<br>
+</h3>
+The data to be output is directly defined.<br>
+<h3><a name="true"></a><a href="#Building_Block_Overview">true</a> -
+output defined data if <a href="#Conditional_Processing">output flag</a>
+is true<br>
+</h3>
+The data to be output is directly defined.
+<h3><a name="false"></a><a href="#Building_Block_Overview">false</a> -
+output defined data if <a href="#Conditional_Processing">output flag</a>
+is false<br>
+</h3>
+The data to be output is directly defined.
+<h3><a name="deptrue"></a><a href="#Building_Blocks">deptrue</a> -
+output defined data if <a href="#Conditional_Processing">output flag</a>
+is true and dependent
+output flag is true<br>
+</h3>
+The data to be output is directly defined.
+<h3><a name="depfalse"></a><a href="#Building_Block_Overview">depfalse</a>
+- output defined data if <a href="#Conditional_Processing">output flag</a>
+is true and dependent
+output flag is false<br>
+</h3>
+The data to be output is directly defined.
+<h3><a name="clear"></a><a href="#Building_Block_Overview">clear</a> -
+clear output <a href="#Conditional_Processing">flag value</a><br>
+</h3>
+This building block can only be inserted in a page. There are no
+definition data.
+<h3><a name="depclear"></a><a href="#Building_Block_Overview">depclear</a>
+- clear dependent output <a href="#Conditional_Processing">flag value</a><br>
+</h3>
+This building block can only be inserted in a page. There are no
+definition data.
+<h3><a name="save"></a><a href="#Building_Block_Overview">save</a> -
+save output <a href="#Conditional_Processing">flag values</a><br>
+</h3>
+This building block can only be inserted in a page. There are no
+definition data.
+<h3><a name="restore"></a><a href="#Building_Block_Overview">restore</a>
+- restore output <a href="#Conditional_Processing">flag values</a><br>
+</h3>
+This building block can only be inserted in a page. There are no
+definition data.
+<h3><a name="csslink"></a><a href="#Building_Block_Overview">csslink</a>
+- insert&nbsp; link to css&nbsp; page&nbsp; if css page is
+defined <br>
+</h3>
+This building block can only be inserted in a page. There are no
+definition data.<br>
+<h3><a name="Additional_Information_about_Images"></a>Additional
+Information about Images</h3>
+Minimoz preloads images and uses the image building block name for
+image references. <a href="#gifimg">Gif images</a> may be referenced
+by <span style="font-weight: bold;">/img/</span><span
+ style="color: rgb(51, 102, 255);">name</span><span
+ style="font-weight: bold;">.gif</span>, <a href="#jpgimg">jpeg images</a>
+by <span style="font-weight: bold;">/img/</span><span
+ style="color: rgb(51, 102, 255);">name</span><span
+ style="font-weight: bold;">.jpg</span> and <a href="#pngimg">png
+images</a> by <span style="font-weight: bold;">/img/</span><span
+ style="color: rgb(51, 102, 255);">name</span><span
+ style="font-weight: bold;">.png</span> where <span
+ style="color: rgb(51, 102, 255);">name</span> is the image <a
+ href="#building_block_name">building block name</a>. It is important
+to know how images are addressed as building blocks can't include other
+building blocks which means img tags in <a href="#Building_Blocks">building
+blocks</a> have to be defined manually. Keep in mind that you cannot
+address images not preloaded by minimoz.<br>
+<br>
+<hr style="width: 100%; height: 2px;">
+<h2><a name="Pages"></a>Pages</h2>
+Pages define the actual output elements that can be retrieved by
+minimoz clients. Any page is specified using the following form:<br>
+<br>
+<span style="font-weight: bold;">&lt;+</span><span
+ style="color: rgb(51, 102, 255);">pagename</span><span
+ style="font-weight: bold;">&gt;</span><span
+ style="font-style: italic; color: rgb(51, 102, 255);">page data</span><span
+ style="font-weight: bold;">&lt;-</span><span
+ style="color: rgb(51, 102, 255);">pagename</span><span
+ style="font-weight: bold;">&gt;</span><br>
+<br>
+The <span style="color: rgb(51, 102, 255);">pagename</span> is one of
+the <a href="#Page_Names">names defined below</a>. Any <span
+ style="font-style: italic; color: rgb(51, 102, 255);">page data</span>
+consists of data sent directly to the client and inserted building
+blocks. Any <a href="#Building_Blocks">building block</a> is inserted
+in a page by including the following form (the building block must be
+defined before it can be inserted):<br>
+<br>
+<span style="font-weight: bold;">&lt;@</span><a href="#bbspecifier">bbspecifier</a><span
+ style="font-weight: bold;">:</span><a href="#name">name</a><span
+ style="font-weight: bold;">&gt;</span><br>
+<br>
+Note that there is no name for the <a href="#clear"><span
+ style="font-style: italic;">clear</span></a>, <a href="#depclear"><span
+ style="font-style: italic;">depclear</span></a>, <a href="#save"><span
+ style="font-style: italic;">save</span></a>, <a href="#restore"><span
+ style="font-style: italic;">restore</span></a> and <a href="#csslink"><span
+ style="font-style: italic;">csslink</span></a> building blocks.<br>
+<h3><a name="NLS_Support"></a>NLS Support</h3>
+As you can see above the <a href="#nlslist">nlslist</a> of the
+building blocks defined before are not included when a <a
+ href="#Building_Blocks">building block</a> is referenced in a page.
+This selection is done automatically by evaluation of the
+Accept-Language header transmitted by the user agent (browser). Thus it
+is possible to define building blocks in various languages and to have
+them output to the client depending on the clients language
+preferences. The selection is as follows between all building blocks of
+the same type with the same name:<br>
+<ol>
+  <li>Use the building block that defines the nls identifier which is
+most left in the Accept-Language header sent by the client (to be
+flexible the <a href="#nlsexamples">comparison</a> is case insensitive
+with '<span style="font-weight: bold;">-</span>' being mapped to '<span
+ style="font-weight: bold;">_</span>')<br>
+  </li>
+  <li>Use the first building block that has no <a href="#nlslist">nlslist</a>
+specified</li>
+  <li>Use the last building block specified</li>
+</ol>
+<h3><a name="Conditional_Processing"></a>Conditional Processing</h3>
+There are some building blocks for conditional processing. Their
+inclusion in a page allows conditional output depending on output flag
+values. There are two flag values:<br>
+<ol>
+  <li>output flag value</li>
+  <li>dependent output flag value (only evaluated if the output flag is
+true)<br>
+  </li>
+</ol>
+Both values are simultaneously set by building blocks being processed. <a
+ href="#Building_Block_Overview">Building blocks</a> setting the values
+are text oriented building blocks that can fail to output regular data
+either due to database data being not available or due to database
+failures. If these building blocks do database oriented output they do
+set both output flags.<br>
+<br>
+Furthermore both output flags can be <a href="#save">saved</a> and <a
+ href="#restore">restored</a> simultaneously and they can be <a
+ href="#clear">cleared</a> independently of each <a href="#depclear">other</a>.
+Then the <a href="#true"><span style="font-style: italic;">true</span></a>,
+<a style="font-style: italic;" href="#deptrue">deptrue</a>, <a
+ href="#false"><span style="font-style: italic;">false</span></a> and <a
+ href="#depfalse"><span style="font-style: italic;">depfalse</span></a>
+conditionals can be used to output data to the client according to the
+state of the output flags.<br>
+<br>
+You can use the conditional processing e.g. to output some text, if
+there can neither category nor external page data be found in the
+database for the keywords given by a user. Keep in mind that the
+conditional processing can be combined with <a href="#NLS_Support">nls
+support</a>, too.<br>
+<h3><a name="Page_Names"></a>Page Names<br>
+</h3>
+The following table gives an overview over all pages available. Note
+that pages named like '<span style="font-style: italic;">err*</span>'
+are redirect and error pages which are defined automatically by
+minimoz, if they are not defined in a template.<br>
+<br>
+<table style="width: 100%; text-align: left;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <th style="vertical-align: top;">Name<br>
+      </th>
+      <th style="vertical-align: top;">Description<br>
+      </th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="catalogpage"></a>catalogpage<br>
+      </td>
+      <td style="vertical-align: top;">this page contains the
+presentation of all available categories<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="homepage"></a>homepage<br>
+      </td>
+      <td style="vertical-align: top;">this page (<span
+ style="font-weight: bold;">/</span>)contains the minimoz home page, if
+not defined the catalogpage definition is used<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="indexpage"></a>indexpage<br>
+      </td>
+      <td style="vertical-align: top;">this top level <span
+ style="font-weight: bold;">/index.html</span> page can contain an
+alternate top level home or catalog page, if not defined the
+catalogpage definition is used<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="infopage"></a>infopage<br>
+      </td>
+      <td style="vertical-align: top;">this page (category url followed
+by <span style="font-weight: bold;">/desc.html</span>) contains a
+category description<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="advancedpage"></a>advancedpage<br>
+      </td>
+      <td style="vertical-align: top;">this page (<span
+ style="font-weight: bold;">/advanced.html</span>) contains the
+advanced search form<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="querypage"></a>querypage<br>
+      </td>
+      <td style="vertical-align: top;">this page (<span
+ style="font-weight: bold;">/search.cgi</span>) contains the search
+form output<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="csspage"></a>csspage<br>
+      </td>
+      <td style="vertical-align: top;">cascading style sheet page (<span
+ style="font-weight: bold;">/minimoz.css</span>)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="robotspage"></a>robotspage<br>
+      </td>
+      <td style="vertical-align: top;">top level <span
+ style="font-weight: bold;">/robots.txt</span>, can be used to restrict
+robots from crawling the minimoz database if the robot honors this file<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a name="err302page"></a>err302page<br>
+      </td>
+      <td style="vertical-align: top;">Found, this redirect page is
+used when minimoz can't find the requested catalog entry or does find
+an entry in the redirect table<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">err400page<br>
+      </td>
+      <td style="vertical-align: top;">Bad request, used when minimoz
+can't handle the request delivered by the client<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">err404page<br>
+      </td>
+      <td style="vertical-align: top;">Not found, used when any of the
+non-catalog pages is requested and the page is not defined or if a not
+defined image is requested<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">err500page<br>
+      </td>
+      <td style="vertical-align: top;">Internal server error, used e.g.
+when minimoz can't access the database or runs out of memory<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">err501page<br>
+      </td>
+      <td style="vertical-align: top;">Not implemented, used when any
+request type other than GET is used in a minimoz request<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+The page you will have to begin with when you define your own template
+is the <a href="#catalogpage">catalogpage</a>. It is the most common
+page which is used to display any of the available categories. Then you
+probably will want to define the <a href="#infopage">infopage</a> to
+be able to access the category descriptions as well as the <a
+ href="#querypage">querypage</a> to be able to search the database.<br>
+<br>
+Having set up the basic pages you probably want to define a <a
+ href="#homepage">homepage</a> with some custom layout, probably in
+your preferred language(s). To be able to either access the english
+home page or the top level catalog in standard format you then can
+define an <a href="#indexpage">indexpage</a> for this purpose.<br>
+<br>
+Additionally you can define the <a href="#advancedpage">advancedpage</a>
+if you want to make the advanced search form available and you can
+define the <a href="#robotspage">robotspage</a> for crawler exclusion.<br>
+<br>
+Finally you can define <a href="#err302page">custom error pages</a> in
+the case you either want to have <a href="#NLS_Support">translated
+error messages</a> or a custom error page layout.<br>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Database Interface</title>
+  <meta content="Andreas Steinmetz, ast@domdv.de" name="author">
+</head>
+<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
+ alink="#000099" link="#000099" vlink="#990099">
+<h1>Database Interface</h1>
+The database interface is a database independent layer that is based on
+the construct of prepared SQL statements. The basic call sequence
+within an application is:<br>
+<ul>
+  <li><a href="#sqlinit">sqlinit()</a></li>
+  <li>for every thread <a href="#sqlthreadinit">sqlthreadinit()</a></li>
+  <li>do all database related work, either <a href="#sqlreset">sqlreset()</a>
+or <a href="#sqlopen">sqlopen()</a> followed by SQL command sequences
+followed
+by <a href="#sqlclose">sqlclose()</a><br>
+  </li>
+  <li>for every thread <a href="#sqlthreadexit">sqlthreadexit()</a><br>
+  </li>
+  <li><a href="#sqlexit">sqlexit()</a><br>
+  </li>
+</ul>
+Typical SQL command sequences are:<br>
+<ul>
+  <li>check if the database connection still exists through <a
+ href="#sqlping">sqlping()</a><br>
+  </li>
+  <li><a href="#sqlrun">sqlrun()</a></li>
+  <li>optional <a href="#sqllock">sqllock()</a> followed by <a
+ href="#sqlprep">sqlprep()</a> followed by any amount of <a
+ href="#sqlinsert">sqlinsert() </a>followed by <a href="#sqlfin">sqlfin()</a>
+followed by optional <a href="#sqlunlock">sqlunlock()</a></li>
+  <li><a href="#sqlprep">sqlprep()</a> followed by optional <a
+ href="#sqlparams">sqlparams()</a> followed by any amount of <a
+ href="#sqlrow">sqlrow()</a>, then either restart with <a
+ href="#sqlparams">sqlparams()</a> or finish with <a href="#sqlfin">sqlfin()</a><br>
+  </li>
+</ul>
+A <span style="text-decoration: underline;">prepared statement</span>
+is an SQL statement that can contain wildcards in
+most of the SQL parameters. Which parameters can be wildcarded is
+database dependent but it is safe to assume that any of the values of
+an <span style="font-style: italic;">insert</span> statement can be
+wildcarded as well as any of the values in a
+<span style="font-style: italic;">where</span> clause of a query as
+long as the wildcard is compared to a table
+column.<br>
+<br>
+The <span style="text-decoration: underline;">wildcard</span> used
+here is '<span style="font-weight: bold;">?</span>',
+the question mark. These wildcards are related one to one to the format
+specifiers of the <a href="#sqlprep">sqlprep()</a> and the <a
+ href="#sqlparams">sqlparams()</a> functions. This means if e.g. a SQL
+statement in a call to the <a href="#sqlprep">sqlprep()</a> function
+has two '<span style="font-weight: bold;">?</span>' wildcards, the
+first relating to an integer field and the second relating to a text
+field, the format specifier needs to be '<span
+ style="font-weight: bold;">it</span>'
+with '<span style="font-weight: bold;">i</span>' denoting the integer
+and '<span style="font-weight: bold;">t</span>' denoting the text field.<br>
+<br>
+The same mechanism is used for the format specifier of the <a
+ href="#sqlrow">sqlrow()</a> function. If a SQL select statement
+returns an integer as the first and a text string as the second column,
+the format specifier for the <a href="#sqlrow">sqlrow()</a> function
+needs to be '<span style="font-weight: bold;">it</span>'. Note that it
+is possible to ignore trailing result columns, e.g. a format specifier
+of '<span style="font-weight: bold;">i</span>' is also valid in the
+previous example. In this case only the integer value is retrieved from
+the database API, though the database API will usually retrieve both
+the integer and the text string from the database.<br>
+<br>
+The <a name="database_specifier"></a><span
+ style="text-decoration: underline;">database specifier</span> passed
+to either of the <a href="#sqlinit">sqlinit()</a>, <a href="#sqlreset">sqlreset()</a>
+or <a href="#sqlopen">sqlopen()</a> functions depends on the database
+used. Usually it is either &lt;<span style="font-style: italic;">path-to-database</span>&gt;,
+&lt;<span style="font-style: italic;">database-socket</span><span
+ style="font-weight: bold;">&nbsp;:&nbsp;</span><span
+ style="font-style: italic;">database</span>&gt;,
+&lt;<span style="font-style: italic;">database-host</span><span
+ style="font-weight: bold;">&nbsp;:&nbsp;</span><span
+ style="font-style: italic;">database</span>&gt;
+or &lt;<span style="font-style: italic;">database-host</span><span
+ style="font-weight: bold;">&nbsp;:&nbsp;</span><span
+ style="font-style: italic;">database-port</span><span
+ style="font-weight: bold;">&nbsp;:&nbsp;</span><span
+ style="font-style: italic;">database</span>&gt;.<br>
+<br>
+A <span style="text-decoration: underline;"><a
+ name="special_collation_sequence"></a>special collation sequence</span>
+is used, either by installing a user
+defined collation function through the database API or by a user
+defined function that must be installed and activated on the database
+server. In both cases the database header file (db.h) must be adapted
+accordingly. See the included code in <span style="font-style: italic;">sqlite3_sqlopen.c</span>,
+<span style="font-style: italic;">mysql_dmozcoll.c</span> and <span
+ style="font-style: italic;">pgsql_dmozcoll.c</span> for details on how
+to implement
+the collation function.<br>
+<br>
+When you want to add a new database you will have to adapt the <span
+ style="font-style: italic;">Makefile</span>s and the <span
+ style="font-style: italic;">Makedefs</span> file accordingly.
+Furthermore you will need to add the proper definitions for the new
+database to <span style="font-style: italic;">db.h</span>. The first
+two things specified must be the data types <span
+ style="font-style: italic;">DB</span> and <span
+ style="font-style: italic;">SQL</span>. <span
+ style="font-style: italic;">DB</span> is an opaque database handle
+that defines a database connection. <span style="font-style: italic;">SQL</span>
+is an opaque handle for a prepared statement. The handle is associated
+with a database connection. There may be any amount of <span
+ style="font-style: italic;">SQL</span> handles existing for a <span
+ style="font-style: italic;">DB</span> handle. These opaque handles
+should usually be pointers. Then you have to specify the default
+database, database user and password. Defne <span
+ style="font-style: italic;">SQLFLAG_MULTIROW</span> if your database
+supports the <span style="font-style: italic;">INSERT INTO table
+VALUES (val,val),(val,val),...</span> construct for insertion of
+multiple rows per sql statement. Define the <span
+ style="font-style: italic;">SQLSTMT_TRUNCATE</span> macro to the sql
+truncate command if the database supports this command and if it is
+actually faster than the delete statement for the purposes of this
+code. Define <span style="font-style: italic;">SQLIDX_EXTRA</span> to
+an extra sql
+command to be executed after the database and all indexes created if
+your database engine requires this. Define <span
+ style="font-style: italic;">SQLTBL_STD</span> to contain the standard
+table type and <span style="font-style: italic;">SQLTBL_MEM</span> to
+contain the memory based table type if your database engine supports
+this. Use the macro <span style="font-style: italic;">SQLSTMT_TEXTIDX</span>
+to define the indexing length for text fields if your database requires
+this ( a length of 255 should be sufficient). Use the macros <span
+ style="font-style: italic;">SQLSTMT_COLLATE</span>, <span
+ style="font-style: italic;">SQLSTMT_COLLATE1</span> and <span
+ style="font-style: italic;">SQLSTMT_COLLATE2</span> to define the
+invocation of the <a href="#special_collation_sequence">special
+collation sequence</a> (see the code for details). Finally you have to
+specify the data types <span style="font-style: italic;">SQLTYPE_TINYINT</span>
+(0-255), <span style="font-style: italic;">SQLTYPE_SMALLINT</span>
+(0-65535), <span style="font-style: italic;">SQLTYPE_INTEGER</span>
+(0-2147483647), <span style="font-style: italic;">SQLTYPE_TINYTEXT</span>
+(0-255 characters) and <span style="font-style: italic;">SQLTYPE_TEXT</span>
+(0-65535 characters), make sure that there are no index related
+problems if you use special data types for the small integer data types.<br>
+<br>
+A description of&nbsp; the database interface routines follows below.<br>
+<h2><a name="sqlinit"></a>sqlinit - initialize database API<br>
+</h2>
+int sqlinit(char *database)<br>
+<ul>
+  <li><span style="font-style: italic;">database</span> - backend
+dependent <a href="#database_specifier">database specifier</a></li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine is called once in any application before any other
+database routine is called. Its purpose is to initialize the database
+API.<br>
+<h2><a name="sqlexit"></a>sqlexit - deinitialize database API<br>
+</h2>
+int sqlexit(void)<br>
+<ul>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine is called once in any application as the last database
+related action. Its purpose is to deinitialize the database API.<br>
+<h2><a name="sqlthreadinit"></a>sqlthreadinit - initialize thread
+specific database API<br>
+</h2>
+int sqlthreadinit(void)<br>
+<ul>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine is called once from a created thread prior to any database
+related action. Its purpose is to initialize the per thread database
+API.<br>
+<h2><a name="sqlthreadexit"></a>sqlthreadexit - deinitialize thread
+specific database API<br>
+</h2>
+int sqlthreadexit(void)<br>
+<ul>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine is called once from a thread after the last database
+related action. Its purpose is to deinitialize the per thread database
+API.<br>
+<h2><a name="sqlreset"></a>sqlreset - reset database<br>
+</h2>
+int sqlreset(char *database,char *user,char *password)<br>
+<ul>
+  <li><span style="font-style: italic;">database</span> - backend
+dependent <a href="#database_specifier">database specifier</a></li>
+  <li><span style="font-style: italic;">user</span> - database user or <span
+ style="font-style: italic;">NULL</span> if none specified</li>
+  <li><span style="font-style: italic;">password</span> - password of
+database user or <span style="font-style: italic;">NULL</span> if none
+specified</li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine resets the specified database to an existing and empty
+database. Typically this means to drop and then to create the specified
+database.<br>
+<h2><a name="sqlopen"></a>sqlopen - open database<br>
+</h2>
+int sqlopen(char *database,char *user,char *password,DB *db,int flags)<br>
+<ul>
+  <li><span style="font-style: italic;">database</span> - backend
+dependent <a href="#database_specifier">database specifier</a></li>
+  <li><span style="font-style: italic;">user</span> - database user or <span
+ style="font-style: italic;">NULL</span> if none specified</li>
+  <li><span style="font-style: italic;">password</span> - password of
+database user or <span style="font-style: italic;">NULL</span> if none
+specified</li>
+  <li><span style="font-style: italic;">db</span> -&nbsp; pointer to an
+opaque database handle</li>
+  <li><span style="font-style: italic;">flags</span> - open mode hints,
+a bitwise or of none or any of the
+following:<br>
+SQLFLAGS_LOWMEM - use small table/query cache<br>
+SQLFLAGS_STDMEM - use default table/query cache<br>
+SQLFLAGS_HIGHMEM - use large table/query cache<br>
+SQLFLAGS_BEGIN - start a transaction<br>
+  </li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine opens the specified database for subsequent access. In
+case of success it returns an opaque database handle (usually a
+pointer) through the '<span style="font-style: italic;">db</span>'
+output parameter.<br>
+<h2><a name="sqlclose"></a>sqlclose - close database<br>
+</h2>
+int sqlclose(DB db,int flags)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">flags</span> - close mode
+hints, none or any of the following:<br>
+SQLFLAGS_COMMIT - commit pending transaction<br>
+SQLFLAGS_ROLLBACK - rollback pending transaction<br>
+  </li>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine closes access to the database.<br>
+<h2><a name="sqlping"></a>sqlping - check if database connection still
+exists</h2>
+int sqlping(DB db)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li>returns 0 if the connection still exists, -1 if the connection no
+longer exists</li>
+</ul>
+This routine checks, if the database connection still exists. A
+database connection may be broken unintentionally e.g. by server or
+network failures.<br>
+<h2><a name="sqlrun"></a>sqlrun - execute SQL command<br>
+</h2>
+int sqlrun(DB db,const char *cmd)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">cmd</span> - the SQL command to
+be executed</li>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine executes the given SQL command.<br>
+<h2><a name="sqllock"></a>sqllock - lock table for exclusive access<br>
+</h2>
+int sqllock(DB db,char *table)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">table</span> - name of the
+table to be locked</li>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine locks the given table for exclusive access. If necessary
+this routine can be used to start a transaction.<br>
+<h2><a name="sqlunlock"></a>sqlunlock - unlock all locked tables<br>
+</h2>
+int sqlunlock(DB db)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li>returns 0 on success, -1 on error</li>
+</ul>
+This routine unlocks all locked tables. In case of a pending
+transaction the transaction may be committed and a new transaction
+started.<br>
+<h2><a name="sqlprep"></a>sqlprep - prepare SQL command<br>
+</h2>
+int sqlprep(DB db,SQL *sql,const char *cmd,const char *tblfmt,const
+char *format,...)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">sql</span> - pointer to an
+opaque prepared statement handle</li>
+  <li><span style="font-style: italic;">cmd</span> - SQL statement to
+be prepared, can contain '<span style="font-weight: bold;">?</span>'
+characters as
+wildcards<br>
+  </li>
+  <li><span style="font-style: italic;">tblfmt</span> - either <span
+ style="font-style: italic;">NULL</span> if there are no wildcards or a
+string consisting of
+'<span style="font-weight: bold;">i</span>' (integer) and '<span
+ style="font-weight: bold;">t</span>' (text) characters specifying the
+wildcard data
+types<br>
+  </li>
+  <li><span style="font-style: italic;">format</span> - either <span
+ style="font-style: italic;">NULL</span> if no parameters are specified
+here or a
+string consisting of '<span style="font-weight: bold;">i</span>'
+(integer) and '<span style="font-weight: bold;">t</span>' (text)
+characters specifying
+the following parameters<br>
+  </li>
+  <li><span style="font-style: italic;">...</span> - the actual
+parameters specified by the <span style="font-style: italic;">format</span>
+parameter,
+either integer values or string pointers</li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine prepares an SQL statement that may contain wildcards for
+later use. Note that for SQL commands without wildcards that don't
+return any data the use of sqlrun is the preferred method. All strings
+specified (by pointer) in a call to this routine <span
+ style="text-decoration: underline;">must not
+be modified and exist</span> until any
+of the <a href="#sqlparams">sqlparams()</a>, <a href="#sqlinsert">sqlinsert()</a>,
+<a href="#sqlrow">sqlrow()</a> or <a href="#sqlfin">sqlfin()</a>
+routines is called.<br>
+<h2><a name="sqlinsert"></a>sqlinsert - execute prepared SQL command
+with given parameters<br>
+</h2>
+int sqlinsert(DB db,SQL sql,char *format,...)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">sql</span> - opaque prepared
+statement handle</li>
+  <li><span style="font-style: italic;">format</span> - a
+string consisting of '<span style="font-weight: bold;">i</span>'
+(integer) and '<span style="font-weight: bold;">t</span>' (text)
+characters specifying
+the following parameters<br>
+  </li>
+  <li>... - the actual parameters specified by the <span
+ style="font-style: italic;">format</span> parameter,
+either integer values or string pointers</li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine executes the prepared statement with the given parameters.
+Note that this routine is named '<span style="font-style: italic;">sqlinsert</span>'
+as it is used only for this
+purpose, it can, however be used for other SQL statements not returning
+any data rows, too.<br>
+<h2><a name="sqlparams"></a>sqlparams - set new parameters for SQL
+command<br>
+</h2>
+int sqlparams(DB db,SQL sql,const char *format,...)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">sql</span> - opaque prepared
+statement handle</li>
+  <li><span style="font-style: italic;">format</span> - either NULL if
+no paramters are specified or a
+string consisting of '<span style="font-weight: bold;">i</span>'
+(integer) and '<span style="font-weight: bold;">t</span>' (text)
+characters specifying
+the following parameters<br>
+  </li>
+  <li>... - the actual parameters specified by the <span
+ style="font-style: italic;">format</span> parameter,
+either integer values or string pointers</li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine is intended for use with the <a href="#sqlrow">sqlrow()</a>
+function. It sets up
+new parameters for the given prepared statement or resets a prepared
+statement's state for reuse of the prepared statement.
+Any pending output for the <a href="#sqlrow">sqlrow()</a> routine is
+canceled by this routine.
+All strings specified (by pointer) in a call to this routine <span
+ style="text-decoration: underline;">must not
+be modified and exist</span> until either this routine is called again
+or any
+of the <a href="#sqlinsert">sqlinsert()</a>, <a href="#sqlrow">sqlrow()</a>
+or <a href="#sqlfin">sqlfin()</a> routines is called.<br>
+<h2><a name="sqlrow"></a>sqlrow - get next row of data for prepared SQL
+command<br>
+</h2>
+int sqlrow(DB db,SQL sql,const char *format,...)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">sql</span> - opaque prepared
+statement handle</li>
+  <li><span style="font-style: italic;">format</span> - a
+string consisting of '<span style="font-weight: bold;">i</span>'
+(integer) and '<span style="font-weight: bold;">t</span>' (text)
+characters specifying
+the following output parameters<br>
+  </li>
+  <li>... - the actual output parameters specified by the <span
+ style="font-style: italic;">format</span>
+parameter, either integer pointers or string pointers</li>
+  <li>returns 0 on success, 1 if there are no more rows to be
+retrieved, -1 on error<br>
+  </li>
+</ul>
+This routine fetches the next data row associated with the prepared
+statement. If it returns any other value than 0 it must not be called
+again. A return value of 1 means that all available data rows have been
+retrieved in previous calls to this routine, the call returning 1 does
+not return any data. All strings returned (as pointers) are guaranteed
+to exist until the next call to this routine with the same prepared
+statement handle. All strings returned must be treated a read only. It
+is possible to prepare a statement that doesn't return any data rows
+and execute it with this routine. In this case the call to <span
+ style="font-style: italic;">sqlrow</span>
+returns 1 which must be treated as a success value.<br>
+<h2><a name="sqlfin"></a>sqlfin - unprepare SQL command<br>
+</h2>
+int sqlfin(DB db,SQL sql)<br>
+<ul>
+  <li><span style="font-style: italic;">db</span> - opaque database
+handle</li>
+  <li><span style="font-style: italic;">sql</span> - opaque prepared
+statement handle</li>
+  <li>returns 0 on success, -1 on error<br>
+  </li>
+</ul>
+This routine unprepares the given prepared statement. The statement
+cannot be used anymore after this routine has been called, no matter if
+this routine returns an error or not.<br>
+<br>
+</body>
+</html>

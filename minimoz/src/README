@@ -1,0 +1,19 @@
+Copyright (c) 2004 Andreas Steinmetz, ast@domdv.de
+
+Note: the NLS strings in buildmoz.c are extracted from the dmoz.org
+web site The dmoz.org copyright applies for them. The stopword list
+in buildmoz.c is based on various sources available on the web. The
+main source is http://www.unine.ch/info/clef/ and to my knowledge
+all sources I used are freely available for any use.
+
+Content Encoding:
+
+I did prefer using deflate encoding when the user agent did send
+
+	Accept-Encoding: gzip,deflate
+
+because it costs a bit less in cpu usage and bandwidth. Well, I had
+to change this when I did a test with the bogosity from Redmond they
+call a browser. This beast happily sends the above line and when
+it then gets delivered a deflated page it just renders an empty page.
+
