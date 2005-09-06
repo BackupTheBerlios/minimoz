@@ -204,6 +204,7 @@ all:
 	@echo
 	@echo ============================================
 	@echo Exactly one database type must be specified.
+	@echo Edit the file \'Makedefs\' before compiling.
 	@echo ============================================
 	@echo
 	@false
